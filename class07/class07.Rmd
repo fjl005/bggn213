@@ -39,17 +39,17 @@ rescale(1:10)
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 rescale(c(1:10, "string"))
 ```
 
-```{r}
+```{r, eval=FALSE}
 x <- c(1:10, "string")
 is.numeric(x)
 !is.numeric(x)
 ```
 
-```{r}
+```{r, eval=FALSE}
 # This code is already in the source that we installed
 # It uses a stop function
 # A warning could have been used to.
@@ -68,7 +68,7 @@ rescale2 <- function(x, na.rm=TRUE, plot=FALSE, ...) {
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 rescale2(x)
 ```
 
@@ -317,7 +317,7 @@ y[y%in%x]
 ```
 
 cbind = column bind
-```{r}
+```{r, eval=FALSE}
 gene_intersect <- function(x, y) {
   cbind(x[x%in%y], 
         y[y%in%x])
