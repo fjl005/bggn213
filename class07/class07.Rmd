@@ -1,0 +1,347 @@
+---
+title: "Class 7: R functions and packages"
+author: "Frank Lee"
+date: "4/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## More on function writing
+First we will revisit our function from last day
+
+```{r}
+source("http://tinyurl.com/rescale-R")
+```
+
+Test the **rescale()** function
+
+```{r}
+# This code is from the source that we installed
+rescale <- function(x, na.rm=TRUE, plot=FALSE, ...) {
+   rng <-range(x, na.rm=na.rm)
+   answer <- (x - rng[1]) / (rng[2] - rng[1])
+   if(plot) {
+     plot(answer, ...)
+}
+   return(answer)
+}
+
+rescale(1:10)
+```
+
+
+```{r}
+rescale(c(1:10, "string"))
+```
+
+```{r}
+x <- c(1:10, "string")
+is.numeric(x)
+!is.numeric(x)
+```
+
+```{r}
+# This code is already in the source that we installed
+# It uses a stop function
+# A warning could have been used to.
+# Difference between stop() and warning() is that warning will continue going while stop will terminate the code
+rescale2 <- function(x, na.rm=TRUE, plot=FALSE, ...) {
+   if( !is.numeric(x) ) {
+      stop("Input x should be numeric", call.=FALSE)
+   }
+   rng <-range(x, na.rm=na.rm)
+   answer <- (x - rng[1]) / (rng[2] - rng[1])
+   if(plot) {
+      plot(answer, ...)
+}
+   return(answer)
+}
+```
+
+
+```{r}
+rescale2(x)
+```
+
+## Function practice
+
+Write a function to identify NA elements in two vectors
+
+Start with a simple example input where I know what the answer should be
+```{r}
+x <- c(1,2,NA,3,NA)
+y <- c(NA,3,NA,3,4)
+
+```
+
+
+```{r}
+is.na(x)
+```
+
+
+```{r}
+is.na(y)
+```
+
+I am looking for he positions where it is TRUE in both vectors
+```{r}
+is.na(x)
+is.na(y)
+is.na(x) & is.na(y)
+sum(is.na(x) & is.na(y))
+```
+
+This is my working snippet of code that I can use as the body of my first function.
+
+```{r}
+both_na <-function(x, y) {
+  sum(is.na(x) & is.na(y))
+}
+```
+
+```{r}
+both_na(x, y)
+```
+
+```{r}
+both_na(c(NA, NA, NA), c(NA, NA, 1))
+```
+
+```{r}
+both_na(c(NA, NA, NA), c(1, NA, NA))
+
+```
+
+```{r}
+both_na(c(NA,NA,NA), c(1, NA, NA, NA))
+```
+
+```{r}
+both_na(c(1, NA, NA), c(1, NA, NA, NA, NA, NA))
+```
+
+
+Check if the length of our inputs are equal
+
+```{r}
+x <- c(NA, NA, NA)
+y <- c(1, NA, NA, NA, NA, NA)
+length(x) != length(y)
+```
+
+```{r}
+3 != 2
+```
+
+```{r}
+both_na2 <- function(x, y) {
+  if(length(x) != length(y)) {
+   stop("Input x and y should be the same length")
+}
+  sum( is.na(x) & is.na(y) )
+}
+```
+
+Let's try to both_na3() function with extra features
+```{r}
+both_na3 <- function(x, y) {
+
+  if(length(x) != length(y)) {
+    stop("Input x and y should be vectors of the same length")
+  }
+  
+  na.in.both <- ( is.na(x) & is.na(y) )
+  na.number  <- sum(na.in.both)
+  na.which   <- which(na.in.both)
+  message("Found ", na.number, " NA's at position(s):",
+          paste(na.which, collapse=", ") )
+  
+  return( list(number=na.number, which=na.which) )
+}
+
+x <- c(1, 2, NA, 3, NA)
+y <-  c(NA, 3, NA, 3, NA)
+both_na3(x, y)
+```
+
+```{r}
+which(c(F,F,F,T))
+```
+
+PRACTICE (my brainstorm)
+```{r}
+x <- c(100, 100, 100, 100, 100, 100, 90)
+min(x)
+
+sum(x)
+sum(x) - min(x)
+
+(sum(x) - min(x))/(length(x)-1)
+```
+
+This grade function takes the sum of the grades, subtracts the sum by the minimum value, and then divides it by the total number of entries minus 1 (since the lowest grade is dropped)
+```{r}
+grade <- function(x) {
+    (sum(x) - min(x))/(length(x)-1)
+}
+
+```
+
+
+To create a function when you have the body, you could go to CODE --> EXTRACT FUNCTION
+```{r}
+grade1 <- function(x) {
+  (sum(x) - min(x))/(length(x)-1)
+}
+```
+
+
+Now we'll test out this grade function
+```{r}
+x <- c(100, 100, 100, 100, 100, 100, 90)
+grade(x)
+```
+
+But what happens when there's an NA?
+The sum of the vector becomes NA. The length is okay though; only sum is the issue.
+To combat this, I should change the NA values to 0. 
+```{r}
+y <- c(100, NA, 90, 90, 90, 90, 97, 80)
+is.na(min(y))
+sum(y)
+
+length(y)
+grade(y)
+
+min(y)
+is.na(min(y))
+
+
+#grade(y)
+
+```
+
+Okay, let's restart our brainstorm here. Let's go through each value in the vector and then replace each NA spot with 0 by assigning that spot as a new value. 
+```{r}
+a <-c(NA, NA, 100, 100, 100)
+
+for (c in 1:length(a)) {
+  spot <- a[c]
+  if (is.na(spot)) {
+    a[c] <-  0
+  }
+}
+
+```
+
+The code above worked! Let's put that into our new grade2 function. 
+This new grade function replaces each NA spot with a 0. With the new vector, we will grade it just like we did in the first grade functino. 
+```{r}
+grade2 <- function(x) {
+  
+  for (c in 1:length(x)) {
+    spot <- x[c]
+    if (is.na(spot)) {
+      x[c] <-  0
+    }
+  }
+
+  (sum(x) - min(x))/(length(x)-1)
+}
+```
+
+
+
+```{r}
+grade2(a)
+grade2(x)
+grade2(y)
+```
+
+```{r}
+url <- "https://tinyurl.com/gradeinput"
+
+```
+
+First, we have to read the table from the csv data that we downloaded from the website. 
+```{r}
+studentdata <-read.table("student_homework (2).csv", header = TRUE, sep = ",")
+```
+
+Instead of using read.table with all those arguments, we could do read.csv. We could also do row.names = 1 so that the first column becomes the row names
+```{r}
+students <- read.csv(url, row.names = 1) 
+grade2(students[1,])
+
+ans <- apply(students, 1, grade2)
+```
+
+
+```{r}
+sort(ans, decreasing = TRUE)
+```
+
+
+#Let's move on to the last part of class wooooo
+
+## One last function example
+
+Find the intersectino of two sets
+```{r}
+x <- df1$IDs
+y <- df2$IDs
+
+intersect(x,y)
+```
+
+```{r}
+x
+y
+x%in%y
+x[x%in%y]
+```
+
+```{r}
+y%in%x
+y[y%in%x]
+```
+
+cbind = column bind
+```{r}
+gene_intersect <- function(x, y) {
+  cbind(x[x%in%y], 
+        y[y%in%x])
+}
+```
+
+
+```{r}
+merge(df1, df2, by="IDs")
+```
+
+
+Don't do this! Install the package in the console.
+# ```{r}
+# if (!requireNamespace("BiocManager"))
+#     install.packages("BiocManager")
+# BiocManager::install()
+# ```
+
+```{r}
+library(ggplot2)
+qplot(ans)
+ans
+```
+
+
+
