@@ -1,0 +1,95 @@
+---
+title: "Class 13: Genome Informatics (Pt. 1)"
+author: "Frank Lee"
+date: "5/15/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Ensemle 1000 Genome
+
+What proportion of the Mexican Ancestry in the Los Angeles population (MXL) are homozygous for the asthma associated SNP (G|G)?
+```{r}
+
+mxl <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+head(mxl)
+
+```
+
+We can use the table function to see how many genotypes we have.
+
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+# proportion
+(table(mxl$Genotype..forward.strand.)/nrow(mxl)) * 100
+
+round((table(mxl$Genotype..forward.strand.)/nrow(mxl)) * 100,2)
+
+```
+
+#Quality Scores in FASTQ files
+
+```{r}
+library(seqinr)
+library(gtools)
+s2c("DDDDCDEDCDDDDBBDDDCC@")
+asc(s2c("DDDDCDEDCDDDDBBDDDCC@")) - 33 #33 is the offset
+
+# phred <- asc(s2c("DDDDCDEDCDDDDBBDDDCC@")) - 33
+# phred
+```
+
+## Population Scale Analysis
+
+```{r}
+expr <- read.table("https://bioboot.github.io/bggn213_W19/class-material/rs8067378_ENSG00000172057.6.txt", sep = " ")
+head(expr)
+
+table(expr$geno)
+boxplot <- boxplot(expr)
+boxplot.stats
+summary(expr)
+
+
+
+```
+
+How do I access the G/G genotypes?
+```{r}
+inds <- (expr$geno == "G/G")
+ggonly <- expr[inds,]$exp
+summary(ggonly)
+hist(ggonly)
+
+```
+
+```{r}
+inds <- (expr$geno == "A/A")
+aaonly <- expr[inds,]$exp
+summary(aaonly)
+hist(aaonly)
+```
+
+```{r}
+inds <- (expr$geno == "A/G")
+agonly <- expr[inds,]$exp
+summary(agonly)
+hist(agonly)
+```
+
+
+First try at a boxplot to show this data
+```{r}
+# y ~ grp (y is the vector, grp is how you want to divide the groups (by genotype))
+# notch shows that two medians strongly differ
+boxplot(exp ~ geno, data = expr, notch = TRUE)
+
+```
+
