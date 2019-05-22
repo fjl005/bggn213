@@ -2,7 +2,7 @@
 title: "Class 12: Structural Bioinformatics (Part 2)"
 author: "Frank Lee"
 date: "5/10/2019"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}

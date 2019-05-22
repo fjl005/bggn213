@@ -2,7 +2,7 @@
 title: "Class 09 Unsupervised Learning"
 author: "Frank Lee"
 date: "5/1/2019"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}

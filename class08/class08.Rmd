@@ -2,7 +2,7 @@
 title: "Class 08: Machine Learning"
 author: "Frank Lee"
 date: "4/26/2019"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -271,7 +271,7 @@ This looks much better, now lets check the dimensions again:
 dim(x)
 
 # or, we could have done:
-x <- read.csv("data/UK_foods.csv", row.names=1)
+x <- read.csv("UK_foods.csv", row.names=1)
 head(x)
 
 # Actually, this method is better!!!
