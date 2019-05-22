@@ -1,0 +1,245 @@
+---
+title: "Class 15: Pathway Analysis from RNA-Seq Results"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Differential Expression Analysis
+
+We will use the DESeq2 package from bioconductor
+
+```{r}
+library(DESeq2)
+```
+
+Load our input countData and colData files
+
+```{r}
+metaFile <- "GSE37704_metadata.csv"
+countFile <- "GSE37704_featurecounts.csv"
+
+# Import metadata and take a peak
+colData <- read.csv(metaFile, row.names=1)
+head(colData)
+# colData describes metadata about the columns of countData
+
+# Import countdata and take a peak
+countData <- read.csv(countFile, row.names=1)
+head(countData)
+# countData is the count matrix (number of reads coming from each gene for each sample)
+```
+
+How do we remove that funky first **length** column from countData
+```{r}
+# Name the new matrix something different so that we don't continuously lose columns every time we run the code!
+countData2 <- countData[,-1]
+head(countData2)
+```
+
+How do we remove the data that have only 0's?
+
+```{r}
+zero.inds <- rowSums(countData) == 0
+nonzero.inds <- rowSums(countData) != 0
+head(zero.inds)
+head(nonzero.inds)
+
+# It'd be easier to use nonzero.inds instead of zero.inds because we want the rows that have a sum greater than 0, not zero itself. 
+countData2 <-  countData2[nonzero.inds, ]
+head(countData2)
+```
+
+## Running DESeq2
+
+Nice! Now lets setup the DESeqDataSet object required for the DESeq() function and then run the DESeq pipeline. This is again similar to our last days hands-on session.
+
+```{r}
+dds = DESeqDataSetFromMatrix(countData=countData2,
+                             colData=colData,
+                             design=~condition)
+dds = DESeq(dds)
+```
+
+Get our results
+```{r}
+res <- results(dds)
+head(res)
+```
+
+```{r}
+summary(res)
+```
+
+Now we will make a volcano plot, a commonly produced visualization from this type of data that we introduced last day. Basically it's a plot of log2 fold change vs -log adjusted p-value.
+
+The reason why we take the log of the pvalue is because the p values are really tiny (and we use the negative to turn it into a positive value). So, the log of values less than 0.01 will only get bigger and bigger. 
+
+```{r}
+plot( res$log2FoldChange, -log(res$padj) )
+abline(v = c(-2,2), col = "green", lwd = 2)
+abline(h = -log(0.01), col = "green", lwd = 2)
+```
+
+
+```{r}
+# Make a color vector for all genes
+mycols <- rep("gray", nrow(res))
+
+# Color red the genes with absolute fold change above 2
+mycols[ abs(res$log2FoldChange) > 2 ] <- "red"
+
+# Color blue those with adjusted p-value less than 0.01
+#  and absolute fold change more than 2
+inds <- (abs(res$padj) < 0.01 & (abs(res$log2FoldChange) > 2 ))
+mycols[ inds ] <- "blue"
+
+plot( res$log2FoldChange, -log(res$padj), col=mycols, xlab="Log2(FoldChange)", ylab="-Log(P-value)" )
+abline(v = c(-2,2), col = "green", lwd = 2)
+abline(h = -log(0.01), col = "green", lwd = 2)
+```
+
+
+## Annotation
+
+```{r}
+library("AnnotationDbi")
+library("org.Hs.eg.db")
+
+columns(org.Hs.eg.db)
+
+res$symbol = mapIds(org.Hs.eg.db,           ## Annotation dataset
+                    keys=row.names(res),    ## Our existing IDs
+                    keytype="ENSEMBL",      ## Format of our IDs
+                    column="SYMBOL",        ## The format we want!
+                    multiVals="first")      ## What to do for multiple matches
+```
+
+
+```{r}
+res$entrez = mapIds(org.Hs.eg.db,
+                    keys=row.names(res),
+                    keytype="ENSEMBL",
+                    column="ENTREZID",
+                    multiVals="first")
+
+res$name =   mapIds(org.Hs.eg.db,
+                    keys=row.names(res),
+                    keytype="ENSEMBL",
+                    column="GENENAME",
+                    multiVals="first")
+
+head(res, 10)
+```
+
+
+## Section 2. Pathway Analysis
+
+Here we are going to use the gage package for pathway analysis. Once we have a list of enriched pathways, we're going to use the pathview package to draw pathway diagrams, shading the molecules in the pathway by their degree of up/down-regulation.
+
+```{r}
+library(pathview)
+library(gage)
+library(gageData)
+```
+
+```{r}
+library(gage)
+library(gageData)
+
+data(kegg.sets.hs)
+data(sigmet.idx.hs)
+
+# Focus on signaling and metabolic pathways only
+kegg.sets.hs = kegg.sets.hs[sigmet.idx.hs]
+
+# Examine the first 3 pathways
+head(kegg.sets.hs, 3)
+```
+
+The **gage** package wants a vector as input with our numeric scores of interest with the vector names being ENTREZIDs. 
+```{r}
+foldchanges = res$log2FoldChange
+names(foldchanges) = res$entrez
+head(foldchanges)
+```
+
+```{r}
+# Get the results
+keggres = gage(foldchanges, gsets=kegg.sets.hs)
+```
+
+```{r}
+attributes(keggres)
+```
+
+```{r}
+head(keggres$less)
+```
+
+Pathway.id comes from the above (hsa04110 Cell cycle)
+```{r}
+pathview(gene.data=foldchanges, pathway.id="hsa04110")
+```
+
+```{r}
+# A different PDF based output of the same data
+pathview(gene.data=foldchanges, pathway.id="hsa04110", kegg.native=FALSE)
+```
+
+```{r}
+## Focus on top 5 upregulated pathways here for demo purposes only
+keggrespathways <- rownames(keggres$greater)[1:5]
+
+# Extract the 8 character long IDs part of each string
+keggresids = substr(keggrespathways, start=1, stop=8)
+keggresids
+```
+
+Finally, lets pass these IDs in keggresids to the pathview() function to draw plots for all the top 5 pathways.
+
+```{r}
+pathview(gene.data=foldchanges, pathway.id=keggresids, species="hsa")
+
+```
+
+![](hsa00140.pathview.png)
+
+![](hsa04630.pathview.png)
+
+![](hsa04640.pathview.png)
+
+![](hsa04740.pathview.png)
+
+![](hsa04976.pathview.png)
+
+
+## Section 3. Gene Ontology (GO)
+
+We can also do a similar procedure with gene ontology. Similar to above, go.sets.hs has all GO terms. go.subs.hs is a named list containing indexes for the BP, CC, and MF ontologies. Let’s focus on BP (a.k.a Biological Process) here.
+
+```{r}
+data(go.sets.hs)
+data(go.subs.hs)
+
+# Focus on Biological Process subset of GO
+gobpsets = go.sets.hs[go.subs.hs$BP]
+
+gobpres = gage(foldchanges, gsets=gobpsets, same.dir=TRUE)
+
+lapply(gobpres, head)
+```
+
+
+## Section 4. Reactome Analysis
+
+Reactome is database consisting of biological molecules and their relation to pathways and processes. Reactome, such as many other tools, has an online software available (https://reactome.org/) and R package available (https://bioconductor.org/packages/release/bioc/html/ReactomePA.html).
+
+```{r}
+sig_genes <- res[res$padj <= 0.05 & !is.na(res$padj), "symbol"]
+print(paste("Total number of significant genes:", length(sig_genes)))
+```
+
+
