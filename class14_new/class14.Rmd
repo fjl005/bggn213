@@ -1,0 +1,317 @@
+---
+title: "Class 14: Genome Informatics Part 2"
+author: "Frank Lee"
+date: "5/17/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Import our countData and colData into R
+
+```{r}
+counts <- read.csv("data/airway_scaledcounts.csv", stringsAsFactors = FALSE)
+metadata <-  read.csv("data/airway_metadata.csv", stringsAsFactors = FALSE)
+head(counts)
+head(metadata)
+```
+
+
+Q1. How many genes are we dealing with here?
+
+```{r}
+nrow(counts)
+```
+
+Let's check if the columns of 'counts' is the same as the ID column in 'metadata'
+
+```{r}
+colnames(counts)
+```
+
+```{r}
+metadata$id
+```
+
+```{r}
+colnames(counts)[-1] == metadata$id
+all(colnames(counts)[-1] == metadata$id)
+```
+
+Q2. How many 'control' cell lines do we have? 4
+
+
+
+control <- metadata[metadata[,"dex"]=="control",]
+control.mean <- rowSums( counts[ ,control$id] )/4 
+names(control.mean) <- counts$ensgene
+
+Q3. How would you make the above code more robust?
+
+Let's access just the control counts data so we can calculate 
+```{r}
+control <- metadata[metadata[,"dex"]=="control",]
+control <- metadata[metadata$dex=="control",]
+head(control)
+```
+
+
+Now we want to get the columns in counts with these "control$id" names
+```{r}
+control.mean <- rowSums(counts[ ,control$id])/length(control$id)
+names(control.mean) <- counts$ensgene
+head(control.mean)
+
+```
+
+
+Now do the same for the 'treated' samples
+```{r}
+treated <- metadata[metadata$dex=="treated",]
+head(treated)
+
+treated.mean <- rowSums(counts[,treated$id])/length(treated$id)
+names(treated.mean) <- counts$ensgene
+```
+
+
+Let's put these together into a new data.frame called 'meancounts'
+
+```{r}
+meancounts <- data.frame(control.mean, treated.mean)
+head(meancounts)
+```
+
+Q5. Create a scatter plot showing the mean of the treated samples against the mean of the control samples. 
+
+```{r}
+plot(meancounts)
+```
+
+
+Q6. Try plotting both axes on a log scale. What is the argument to plot() that allows you to do this? 
+```{r}
+plot(meancounts, log="xy")
+```
+
+Calculate fold change and use log2 value
+
+```{r}
+meancounts$log2fc <- log2(meancounts[,"treated.mean"]/meancounts[,"control.mean"])
+head(meancounts)
+```
+
+
+The NaN is returned when you divide by zero and try to take the log. The -Inf is returned when you try to take the log of zero. It turns out that there are a lot of genes with zero expression. Let’s filter our data to remove these genes. Again inspect your result (and the intermediate steps) to see if things make sense to you.
+
+```{r}
+#meancounts[,1:2]==0
+# which() function will tell you which spots are true
+which(c(F, F, T, F))
+
+# Identify the rows (i.e. genes) with zero values
+meancounts[,1:2]==0
+which(meancounts[,1:2]==0, arr.ind = TRUE)
+zero.vals <- which(meancounts[,1:2]==0, arr.ind=TRUE)[,1]
+
+# Remove these rows since we can't really say much about them.
+# Can't take the log of these numbers
+to.rm <- unique(zero.vals)
+mycounts <- meancounts[-to.rm,]
+
+head(mycounts)
+```
+
+
+A common threshold used for calling something differentially expressed is a log2(FoldChange) of greater than 2 or less than -2. Let’s filter the dataset both ways to see how many genes are up or down-regulated.
+
+Q8. Using the up.ind vector above can you determine how many up regulated genes we have at the greater than 2 fc level?
+
+```{r}
+up.ind <- mycounts$log2fc > 2
+head(up.ind)
+
+upreg <- which(up.ind, arr.ind = TRUE)
+length(upreg)
+```
+
+
+```{r}
+down.ind <- mycounts$log2fc < (-2)
+head(down.ind)
+
+downreg <- which(down.ind, arr.ind = TRUE)
+length(downreg)
+```
+
+```{r}
+length(upreg) + length(downreg)
+```
+
+Or, you could sum up the up.ind and down.ind vectors since these vectors are TRUEs and FALSES
+
+```{r}
+sum(up.ind)
+sum(down.ind)
+
+sum(up.ind) + sum(down.ind)
+```
+
+
+## Adding annotation data
+
+```{r}
+anno <- read.csv("annotables_grch38.csv")
+head(anno)
+```
+
+We will use the **merge()** function to add annotation data to our 'mycounts' results
+
+```{r}
+# merge(x,y,by.x,by.y)
+merge(x=mycounts, y=anno, by.x="row.names",by.y="ensgene")
+```
+
+We can use bioconductor to do this too
+```{r}
+library("AnnotationDbi")
+library("org.Hs.eg.db")
+# Enter these in Console!!
+#BiocManager::install("AnnotationDbi")
+#BiocManager::install("org.Hs.eg.db")
+
+```
+
+```{r}
+columns(org.Hs.eg.db)
+```
+
+```{r}
+mycounts$symbol <- mapIds(org.Hs.eg.db,
+                     keys=row.names(mycounts), # Our genenames
+                     keytype="ENSEMBL",        # The format of our genenames
+                     column="SYMBOL",          # The new format we want to add
+                     multiVals="first")
+```
+
+```{r}
+head(mycounts)
+```
+
+
+Q11. Run the mapIds() function two more times to add the Entrez ID and UniProt accession as new columns called mycounts$entrez and mycounts$uniprot.
+
+```{r}
+mycounts$entrez <- mapIds(org.Hs.eg.db,
+                     keys=row.names(mycounts),
+                     column="ENTREZID",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+
+mycounts$uniprot <- mapIds(org.Hs.eg.db,
+                     keys=row.names(mycounts),
+                     column="UNIPROT",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+
+head(mycounts)
+```
+
+
+Q12. Examine your annotated results for those genes with a log2(FoldChange) of greater than 2 (or less than -2 if you prefer) with the View( mycounts[up.ind,] ) function. What do you notice? Would you trust these results? Why or why not?
+
+```{r}
+View(mycounts[up.ind,])
+```
+
+
+
+# 5. DESeq2 analysis
+
+Let's do this the right way. DESeq2 is an R package for analyzing count-based NGS data like RNA-seq. It is available from Bioconductor.
+
+```{r}
+library("DESeq2")
+
+```
+
+
+```{r}
+citation("DESeq2")
+```
+
+Let's build our deseq dataset object needed for running deseq analysis 
+```{r}
+dds <- DESeqDataSetFromMatrix(countData=counts, 
+                              colData=metadata, 
+                              design=~dex, 
+                              tidy=TRUE)
+dds
+```
+
+
+```{r}
+dds <- DESeq(dds)
+```
+
+Get our results
+```{r}
+res <- results(dds)
+as.data.frame(res)
+```
+
+```{r}
+res05 <-  results(dds, alpha = 0.05)
+summary(res05)
+```
+
+```{r}
+mycols <- rep("gray", nrow(res))
+
+# Now we have a mycols vector of all gray. Now, let's replace the ones whose pvalue is less than 0.05 to be red.
+mycols[res$padj < 0.05] <-  "red"
+
+# But we also don't care about the log2 Fold Change values that are between -2 and 2
+mycols [abs(res$log2FoldChange) > 2 & res$padj < 0.05] <- "blue"
+
+plot( res$log2FoldChange,  -log(res$padj), 
+      xlab="Log2(FoldChange)",
+      ylab="-Log(P-value)",
+      col = mycols)
+
+abline(h=-log(0.05), col="darkgray", lty=2)
+abline(v=c(-2,2), col="darkgray", lty=2)
+
+```
+
+
+Another way to plot this is with the EnhancedVolcano.
+
+But first, let's put proper gene names on our results (i.e. gene 'symbols')
+
+```{r}
+x <- as.data.frame(res)
+x$symbol <- mapIds(org.Hs.eg.db, 
+                   keys=row.names(x),
+                   keytype="ENSEMBL",
+                   column="SYMBOL",
+                   multiVals="first")
+```
+
+
+This is an easier way of color-coding the plot. It requires BiocManager::install("EnhancedVolcano") -- put this in the console!
+
+```{r}
+library(EnhancedVolcano)
+```
+
+```{r}
+EnhancedVolcano(x,
+    lab = x$symbol,
+    x = 'log2FoldChange',
+    y = 'pvalue')
+```
+
