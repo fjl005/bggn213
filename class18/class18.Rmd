@@ -1,0 +1,202 @@
+---
+title: "Class 18: Cancer Genomics"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Accessing the Genomic Data Commons
+
+We need the bioconductor package **GenomicDataCommons**
+
+eval=FALSE means that the knitting will treat this part as a comment (aka it won't run it)
+```{r eval=FALSE}
+BiocManager::install("GenomicDataCommons")
+```
+
+Let's use this package to ping the database. 
+
+```{r eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite(c("GenomicDataCommons", "TCGAbiolinks", "maftools"))
+```
+
+Once installed, load the packages, as usual.
+```{r}
+library(GenomicDataCommons)
+library(TCGAbiolinks)
+#library(maftools)
+```
+
+However, an error pops up when we try to load maftools. "there is no package called 'rngtools'"
+We need to download an older version of rngtools that's compatible with our version of R (3.5). Copy the link address and then paste it in the spot where it says "URL" down below. 
+
+curl -O URL
+R CMD INSTALL rng(tab)
+
+Now we can try rerunning library to load the packages and it should work now! 
+
+```{r}
+library(maftools)
+```
+
+
+```{r}
+status()
+```
+
+## Querying the GDC from R
+
+The are four main sets of metadata that we can query, namely projects(), cases(), files(), and  annotations(). We will start with projects()
+```{r}
+projects <- getGDCprojects()
+head(projects)
+```
+
+```{r}
+cases_by_project <- cases() %>%
+  facet("project.project_id") %>%
+  aggregations()
+head(cases_by_project)
+```
+
+
+Q9. Write the R code to make a barplot of the cases per project. Lets plot this data with a log scale for the y axis (log="y"), rotated axis labels (las=2) and color the bar coresponding to the TCGA-PAAD project.
+
+```{r}
+x <- cases_by_project$project.project_id
+head(x) 
+
+# barplot requires a height argument, which is a vector of numbers
+barplot(x$doc_count)
+
+# Make a custom color vector for our plot
+colvec <- rep("lightblue", nrow(x))
+colvec[x$key=="TCGA-PAAD"] <- "red"
+
+# Plot with 'log' for y axis and rotate labels with 'las'
+#par(___)  
+barplot(x$doc_count, names.arg = x$key, las = 2, log="y", col = colvec)
+
+```
+
+
+## Part 2 of the lecture
+
+First, install the bio3d package so we can use the read.fasta function. 
+```{r}
+library("bio3d")
+```
+
+```{r}
+fasta <- read.fasta("~/Downloads/lecture18_sequences.fa")
+```
+
+```{r}
+seqs <- seqaln(fasta)
+```
+
+```{r}
+vec <- seqs$ali[1,] == seqs$ali[2,]
+vec
+
+# find indices where vec = 0
+ind <- which(vec==0)
+
+
+# Let's hard-code it to the 41-specific spot.
+start.ind <- 41-8
+end.ind <- 41 + 8
+
+seqs$ali[1, start.ind:end.ind]
+seqs$ali[2, start.ind:end.ind]
+
+
+```
+
+```{r}
+
+start.ind <- ind[1] - 8
+start.ind
+
+end.ind <-  ind[1] + 8
+end.ind
+
+df <- data.frame(1:length(ind), 1:length(ind))
+df
+
+df[1, 1] = start.ind
+df[1, 2] = end.ind
+
+df
+
+# for (i in 1) {
+#   start.ind <- ind[i] - 8
+#   end.ind <- ind[i] + 8
+#   
+#   df[1, i] <- seqs$ali[1, start.ind:end.ind]
+#   df[i, 2] <- seqs$ali[2, start.ind:end.ind]
+# }
+```
+
+Find the sites (i.e. amino acids that are different)
+
+This looks for mismatch spots using conserv.
+```{r}
+ide <- conserv(seqs, method = "identity")
+ide < 1
+mismatch.inds <- which(ide<1)
+mismatch.inds
+attributes(ide)
+```
+
+This looks for positions in which gaps exist (using gap.inspect).  
+```{r}
+gaps <- gap.inspect(seqs)
+gaps.inds <- gaps$t.inds
+gaps.inds
+```
+
+```{r}
+a <- 1:5
+b <- 4:7
+a[a %in% b]
+a[!a %in% b]
+```
+
+Find the positions in mismatch.inds that are NOT in gaps.inds
+```{r}
+tumor.sites <- mismatch.inds[!mismatch.inds %in% gaps.inds]
+```
+
+```{r}
+seqs$ali[,tumor.sites]
+ids <- paste(seqs$ali[1, tumor.sites], 
+      tumor.sites, 
+      seqs$ali[2, tumor.sites], sep ="")
+ids
+```
+
+```{r}
+start.ind <- tumor.sites - 8
+end.ind <-  tumor.sites + 8
+
+tumor <-  NULL
+
+for (i in 1:length(start.ind)) {
+  tumor <-  seqbind(tumor, 
+                    seqs$ali[2, start.ind[i]: end.ind[i]])
+}
+
+tumor
+
+```
+
+```{r}
+write.fasta(ids = ids, ali = tumor, file = "subsequences.fa")
+
+```
+
+

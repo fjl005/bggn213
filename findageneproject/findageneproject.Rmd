@@ -1,0 +1,58 @@
+---
+title: "Find a Gene Project"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("bio3d")
+```
+
+```{r}
+alignmentfasta <- read.fasta("alignment.fst")
+alignmentfasta
+
+```
+
+```{r}
+seqidentity(alignmentfasta)
+heatmap(seqidentity(alignmentfasta))
+```
+
+```{r}
+old.par <- par()$mar
+par(mar = c(500,2,1,1))
+
+```
+
+I should find the sequence with the highest identity to the other sequences based on the row-wise maximum sum from the sequence identity matrix
+
+```{r}
+seq.id.matrix <- seqidentity(alignmentfasta)
+seq.id.matrix
+
+sum.matrix <- rowSums(seq.id.matrix)
+sum.matrix
+
+max <- max(sum.matrix)
+
+## I need to find a way to determine that the max value corresponds to human
+
+```
+
+```{r}
+human.fasta <- read.fasta("human.rtf")
+human.fasta
+blast.pdb(human.fasta)
+```
+
+```{r}
+pdb.annotate("3GW2_A")
+pdb.annotate("3TQI_A")
+pdb.annotate("1TDP_A")
+```
+
+
