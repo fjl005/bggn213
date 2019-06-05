@@ -14,7 +14,7 @@ My class content includes:
 
 - Class 09: [**Machine Learning: Part 2**](https://github.com/fjl005/bggn213/blob/master/class09/class09.md)
 
-- Class 11: [**Structural Bioinformatics: Part 1**]  md not available yet
+- Class 11: [**Structural Bioinformatics: Part 1**](https://github.com/fjl005/bggn213/blob/master/class11/class11.md)
 
 - Class 12: [**Structural Bioinformatics: Part 2**](https://github.com/fjl005/bggn213/blob/master/class12/class12.md)
 
