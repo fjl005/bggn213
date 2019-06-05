@@ -1,5 +1,5 @@
 ---
-title: "Class 11: Structural Bioinformatics (Pt1)"
+title: "Class 11: Structural Bioinformatics (Part 1)"
 output: github_document
 ---
 

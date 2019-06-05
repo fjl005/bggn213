@@ -1,4 +1,4 @@
-Class 11: Structural Bioinformatics (Pt1)
+Class 11: Structural Bioinformatics (Part 1)
 ================
 
 Revisit the PDB
