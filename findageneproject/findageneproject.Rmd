@@ -12,47 +12,63 @@ library("bio3d")
 ```
 
 ```{r}
-alignmentfasta <- read.fasta("alignment.fst")
+alignmentfasta <- read.fasta("musclerevised.fst")
 alignmentfasta
 
 ```
 
 ```{r}
 seqidentity(alignmentfasta)
-heatmap(seqidentity(alignmentfasta))
+seqs <- seqidentity(alignmentfasta)
+seqs 
+heatmap(seqs)
 ```
 
 ```{r}
 old.par <- par()$mar
-par(mar = c(500,2,1,1))
+
+seqidentity(alignmentfasta)
+heatmap(seqidentity(alignmentfasta), margins = c(8,5), symm=TRUE)
+
 
 ```
+
+
+```{r}
+consensus(alignmentfasta)
+blast.pdb(consensus(alignmentfasta)$seq)
+```
+
+
 
 I should find the sequence with the highest identity to the other sequences based on the row-wise maximum sum from the sequence identity matrix
 
 ```{r}
-seq.id.matrix <- seqidentity(alignmentfasta)
-seq.id.matrix
 
-sum.matrix <- rowSums(seq.id.matrix)
+# Add the sum of each row
+sum.matrix <- rowSums(seqs)
 sum.matrix
 
-max <- max(sum.matrix)
+which.max(sum.matrix)
 
-## I need to find a way to determine that the max value corresponds to human
 
 ```
 
 ```{r}
-human.fasta <- read.fasta("human.rtf")
-human.fasta
-blast.pdb(human.fasta)
+
+alignmentfasta
+alignmentfasta$ali[11,]
+cat.fasta <- alignmentfasta$ali[11,]
+cat.fasta[1:128]
+
+blast.pdb(cat.fasta[1:128])
 ```
 
 ```{r}
-pdb.annotate("3GW2_A")
-pdb.annotate("3TQI_A")
-pdb.annotate("1TDP_A")
+
+pdb.annotate("5XXU_C")
+pdb.annotate("3RH9_A")
+pdb.annotate("6EUQ_A")
 ```
 
 
