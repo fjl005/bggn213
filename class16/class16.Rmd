@@ -1,0 +1,96 @@
+---
+title: "Class 16: Introduction to UNIX"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+```
+
+
+```{r}
+tsv <- read.csv("mm-second.x.zebrafish.tsv", sep = "")
+head(tsv)
+```
+
+Make a histogram of the $bitscore values. You may want to set the optional breaks to be a larger number (e.g. breaks=30).
+
+```{r}
+colnames(tsv)
+colnames(tsv) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore")
+
+hist(tsv$bitscore)
+hist(tsv$bitscore, breaks = 30)
+```
+The answer is that bitscores are only somewhat related to pident; they take into account not only the percent identity but the length of the alignment. You can get a napkin sketch estimate of this by doing the following:
+
+```{r}
+## Asuming your blast results are stored in an object called 'b'
+plot(tsv$pident  * (tsv$qend - tsv$qstart), tsv$bitscore)
+```
+
+Or using ggplot (note you will have to install the ggplot2 package first if you are working on JetStream)
+
+```{r}
+library("ggplot2")
+```
+
+```{r}
+ggplot(tsv, aes(pident, bitscore)) + geom_point(alpha=0.1) 
+
+```
+
+```{r}
+ggplot(tsv, aes((tsv$pident * (tsv$qend - tsv$qstart)), bitscore)) + geom_point(alpha=0.1) + geom_smooth(aes((tsv$pident * (tsv$qend - tsv$qstart)), bitscore))
+
+```
+
+
+
+```{r}
+read.csv("mouse.1.rna.fna.gz.x.cow.faa.crbl.csv")
+```
+
+```{r}
+shmlast_out <- read.csv("mouse.1.rna.fna.gz.x.cow.faa.crbl.csv")
+head(shmlast_out)
+```
+
+
+```{r}
+View(shmlast_out)
+dim(shmlast_out)
+```
+
+Let’s do some data visualization to get a handle on what our blast output looked like: first, let’s look at the E_scaled column.
+
+```{r}
+hist(shmlast_out$E_scaled)
+
+```
+
+We can take a look at some more stats – let’s look at the bitscore column:
+```{r}
+hist(shmlast_out$bitscore) 
+```
+
+We can also look at the length of the queries, which are the mouse sequences in this case.
+```{r}
+hist(shmlast_out$q_len)
+plot(shmlast_out$q_len, shmlast_out$bitscore)
+```
+
+```{r}
+shmlast_sub = shmlast_out[sample(nrow(shmlast_out), 10),]
+View(shmlast_sub)
+```
+
+```{r}
+tmp <- subset(shmlast_out, q_len >= 8000 & q_len <= 11000 & bitscore <=2000)    
+functions <- tmp[, c("q_name", "s_name")]
+```
+
