@@ -24,7 +24,7 @@ My class content includes:
 
 - Class 15: [**Pathway Analysis from RNA-Seq Results**](https://github.com/fjl005/bggn213/blob/master/class15_new/class15.md)
 
-- Class 16: [**Introduction to UNIX](https://github.com/fjl005/bggn213/blob/master/class16/class16.md)
+- Class 16: [**Introduction to UNIX**](https://github.com/fjl005/bggn213/blob/master/class16/class16.md)
 
 - Class 17: [**Biological Network Analysis**](https://github.com/fjl005/bggn213/blob/master/class17/class17.md)
 
