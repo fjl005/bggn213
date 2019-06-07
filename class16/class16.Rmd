@@ -29,7 +29,6 @@ hist(tsv$bitscore, breaks = 30)
 The answer is that bitscores are only somewhat related to pident; they take into account not only the percent identity but the length of the alignment. You can get a napkin sketch estimate of this by doing the following:
 
 ```{r}
-## Asuming your blast results are stored in an object called 'b'
 plot(tsv$pident  * (tsv$qend - tsv$qstart), tsv$bitscore)
 ```
 
@@ -49,11 +48,7 @@ ggplot(tsv, aes((tsv$pident * (tsv$qend - tsv$qstart)), bitscore)) + geom_point(
 
 ```
 
-
-
-```{r}
-read.csv("mouse.1.rna.fna.gz.x.cow.faa.crbl.csv")
-```
+## Part 3
 
 ```{r}
 shmlast_out <- read.csv("mouse.1.rna.fna.gz.x.cow.faa.crbl.csv")
@@ -70,12 +65,11 @@ Let’s do some data visualization to get a handle on what our blast output look
 
 ```{r}
 hist(shmlast_out$E_scaled)
-
 ```
 
 We can take a look at some more stats – let’s look at the bitscore column:
 ```{r}
-hist(shmlast_out$bitscore) 
+hist(shmlast_out$bitscore)
 ```
 
 We can also look at the length of the queries, which are the mouse sequences in this case.
@@ -90,7 +84,7 @@ View(shmlast_sub)
 ```
 
 ```{r}
-tmp <- subset(shmlast_out, q_len >= 8000 & q_len <= 11000 & bitscore <=2000)    
+tmp <- subset(shmlast_out, q_len >= 8000 & q_len <= 11000 & bitscore <=2000)
 functions <- tmp[, c("q_name", "s_name")]
 ```
 
