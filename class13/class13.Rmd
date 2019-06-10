@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-## Ensemle 1000 Genome
+## Ensemble 1000 Genome
 
 What proportion of the Mexican Ancestry in the Los Angeles population (MXL) are homozygous for the asthma associated SNP (G|G)?
 ```{r}

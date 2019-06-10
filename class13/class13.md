@@ -3,8 +3,8 @@ Class 13: Genome Informatics (Pt. 1)
 Frank Lee
 5/15/2019
 
-Ensemle 1000 Genome
--------------------
+Ensemble 1000 Genome
+--------------------
 
 What proportion of the Mexican Ancestry in the Los Angeles population (MXL) are homozygous for the asthma associated SNP (G|G)?
 
@@ -137,7 +137,7 @@ boxplot.stats
     ##     list(stats = stats, n = n, conf = conf, out = if (do.out) x[out & 
     ##         nna] else numeric())
     ## }
-    ## <bytecode: 0x7fedb7b3c148>
+    ## <bytecode: 0x7fbd5e964358>
     ## <environment: namespace:grDevices>
 
 ``` r
