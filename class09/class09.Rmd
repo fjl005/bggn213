@@ -41,14 +41,13 @@ The first 2 columns and the last column are not numerical values, but string val
 head(wisc.df)
 View(wisc.df)
 wisc.data <- as.matrix(wisc.df[,3:32])
-wisc.data
+head(wisc.data)
 ```
 
 Q6. True or False? The data need to be scaled before PCA. TRUE
 
 ```{r}
 row.names(wisc.data) <- wisc.df$id
-wisc.data
 
 diagnosis <- wisc.df$diagnosis
 diagnosis
@@ -175,7 +174,7 @@ order[1]
 Scale the wisc.data and assign the result to data.scaled
 ```{r}
 data.scaled <- scale(wisc.data)
-data.scaled
+head(data.scaled)
 ```
 
 Calculate the (Euclidean) distances between all pairs of observations in the new scaled dataset and assign the result to data.dist.
@@ -252,9 +251,9 @@ table(grps, diagnosis)
 
 Q20. How well do the k-means and hierarchical clustering models you created in previous sections (i.e. before PCA) do in terms of separating the diagnoses? Again, use the table() function to compare the output of each model (wisc.km$cluster and wisc.hclust.clusters) with the vector containing the actual diagnoses.
 ```{r}
-table(wisc.km$cluster, diagnosis)
-table(wisc.hclust.clusters, diagnosis)
-ß```
+#table(wisc.km$cluster, diagnosis)
+#table(wisc.hclust.clusters, diagnosis)
+```
 
 
 ```{r}
