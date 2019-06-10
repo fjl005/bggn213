@@ -21,13 +21,11 @@ head(metadata)
 
 
 Q1. How many genes are we dealing with here?
-
 ```{r}
 nrow(counts)
 ```
 
 Let's check if the columns of 'counts' is the same as the ID column in 'metadata'
-
 ```{r}
 colnames(counts)
 ```
@@ -43,11 +41,11 @@ all(colnames(counts)[-1] == metadata$id)
 
 Q2. How many 'control' cell lines do we have? 4
 
-
-
+```{r}
 control <- metadata[metadata[,"dex"]=="control",]
 control.mean <- rowSums( counts[ ,control$id] )/4 
 names(control.mean) <- counts$ensgene
+```
 
 Q3. How would you make the above code more robust?
 
@@ -113,8 +111,8 @@ The NaN is returned when you divide by zero and try to take the log. The -Inf is
 which(c(F, F, T, F))
 
 # Identify the rows (i.e. genes) with zero values
-meancounts[,1:2]==0
-which(meancounts[,1:2]==0, arr.ind = TRUE)
+head(meancounts[,1:2]==0)
+head(which(meancounts[,1:2]==0, arr.ind = TRUE))
 zero.vals <- which(meancounts[,1:2]==0, arr.ind=TRUE)[,1]
 
 # Remove these rows since we can't really say much about them.
@@ -172,7 +170,7 @@ We will use the **merge()** function to add annotation data to our 'mycounts' re
 
 ```{r}
 # merge(x,y,by.x,by.y)
-merge(x=mycounts, y=anno, by.x="row.names",by.y="ensgene")
+head(merge(x=mycounts, y=anno, by.x="row.names",by.y="ensgene"))
 ```
 
 We can use bioconductor to do this too
@@ -260,7 +258,7 @@ dds <- DESeq(dds)
 Get our results
 ```{r}
 res <- results(dds)
-as.data.frame(res)
+head(as.data.frame(res))
 ```
 
 ```{r}
