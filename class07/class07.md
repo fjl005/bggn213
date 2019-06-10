@@ -48,11 +48,9 @@ is.numeric(x)
 !is.numeric(x)
 ```
 
+This code is already in the source that we installed It uses a stop function A warning could have been used to. Difference between stop() and warning() is that warning will continue going while stop will terminate the code
+
 ``` r
-# This code is already in the source that we installed
-# It uses a stop function
-# A warning could have been used to.
-# Difference between stop() and warning() is that warning will continue going while stop will terminate the code
 rescale2 <- function(x, na.rm=TRUE, plot=FALSE, ...) {
    if( !is.numeric(x) ) {
       stop("Input x should be numeric", call.=FALSE)
@@ -73,9 +71,7 @@ rescale2(x)
 Function practice
 -----------------
 
-Write a function to identify NA elements in two vectors
-
-Start with a simple example input where I know what the answer should be
+Write a function to identify NA elements in two vectors Start with a simple example input where I know what the answer should be
 
 ``` r
 x <- c(1,2,NA,3,NA)
@@ -94,7 +90,7 @@ is.na(y)
 
     ## [1]  TRUE FALSE  TRUE FALSE FALSE
 
-I am looking for he positions where it is TRUE in both vectors
+I am looking for the positions where it is TRUE in both vectors
 
 ``` r
 is.na(x)
@@ -407,7 +403,7 @@ Let's move on to the last part of class wooooo
 One last function example
 -------------------------
 
-Find the intersectino of two sets
+Find the intersection of two sets
 
 ``` r
 x <- df1$IDs
