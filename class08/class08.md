@@ -8,9 +8,9 @@ Kmeans clustering
 
 Let's try out the **kmeans()** function in R with some made-up data kmeans(x, center (aka the number of groups), nstart (number of iterations))
 
+Generate some example data for clustering Remember that rnorm produces a random normal distribution of 30 samples with a mean of 3 or -3 (a third value would have been the standard deviation)
+
 ``` r
-# Generate some example data for clustering
-# Remember that rnorm produces a random normal distribution of 30 samples with a mean of 3 or -3 (a third value would have been the standard deviation)
 tmp <- c(rnorm(30,-3), rnorm(30,3))
 x <- cbind(x=tmp, y=rev(tmp))
 plot(x)
@@ -29,16 +29,16 @@ km
     ## 
     ## Cluster means:
     ##           x         y
-    ## 1  2.825715 -2.695686
-    ## 2 -2.695686  2.825715
+    ## 1  3.373343 -2.938490
+    ## 2 -2.938490  3.373343
     ## 
     ## Clustering vector:
     ##  [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1
     ## [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
     ## 
     ## Within cluster sum of squares by cluster:
-    ## [1] 65.61506 65.61506
-    ##  (between_SS / total_SS =  87.5 %)
+    ## [1] 36.8642 36.8642
+    ##  (between_SS / total_SS =  94.2 %)
     ## 
     ## Available components:
     ## 
@@ -80,13 +80,13 @@ table(km$cluster)
     ## 30 30
 
 ``` r
-# Detemrines cluster centers
+# Determines cluster centers
 km$centers
 ```
 
     ##           x         y
-    ## 1  2.825715 -2.695686
-    ## 2 -2.695686  2.825715
+    ## 1  3.373343 -2.938490
+    ## 2 -2.938490  3.373343
 
 Plot x colored by the kmeans cluster assignment and add cluster centers as blue points
 
@@ -142,8 +142,8 @@ gp3 <- cutree(hc, k=3)
 gp3
 ```
 
-    ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 3 2 2 2
-    ## [36] 2 2 3 2 3 2 2 2 2 2 2 3 2 2 2 2 3 3 2 2 2 2 2 2 3
+    ##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 3 3 2 2
+    ## [36] 2 3 3 2 2 2 3 3 2 3 3 3 3 3 3 2 2 3 3 2 3 3 3 3 3
 
 ``` r
 table(gp3)
@@ -151,7 +151,7 @@ table(gp3)
 
     ## gp3
     ##  1  2  3 
-    ## 30 23  7
+    ## 30 11 19
 
 How about two clusters?
 
@@ -180,7 +180,7 @@ table(gp2, gp3)
     ##    gp3
     ## gp2  1  2  3
     ##   1 30  0  0
-    ##   2  0 23  7
+    ##   2  0 11 19
 
 Now let's try a more real-life like example to see how our clustering looks.
 
@@ -224,11 +224,11 @@ cutree2 <- cutree(hclust, k=2)
 cutree2
 ```
 
-    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-    ##  [36] 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-    ##  [71] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 1 2 2
-    ## [106] 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2
-    ## [141] 2 2 1 2 1 2 2 1 2 2
+    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1
+    ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ##  [71] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2
+    ## [106] 2 2 1 2 2 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ## [141] 2 2 2 1 2 2 2 1 2 2
 
 ``` r
 table2 <- table(cutree2)
@@ -237,7 +237,7 @@ table2
 
     ## cutree2
     ##  1  2 
-    ## 56 94
+    ## 59 91
 
 ``` r
 #For 3 clusters
@@ -245,11 +245,11 @@ cutree3 <- cutree(hclust, k=3)
 cutree3
 ```
 
-    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-    ##  [36] 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 3 2 2 2 2 2 3 2 2 2 3 2 2 2 3 2 2 3 3 3
-    ##  [71] 2 3 2 2 2 2 2 3 2 2 2 2 3 2 2 3 2 2 2 2 2 2 2 2 3 2 3 2 2 2 1 3 1 3 3
-    ## [106] 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 2 3 3 3
-    ## [141] 3 3 1 3 1 3 3 1 3 3
+    ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1
+    ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 2 1 3 2 3 3 2 2 3 3 3 3 3 3 3
+    ##  [71] 3 3 3 3 2 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 2 3 2 3 3 3 2 3 3 2 2 1 2 2
+    ## [106] 2 2 1 2 2 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ## [141] 3 2 2 1 2 2 2 1 2 2
 
 ``` r
 table3 <- table(cutree3)
@@ -258,7 +258,7 @@ table3
 
     ## cutree3
     ##  1  2  3 
-    ## 56 39 55
+    ## 59 50 41
 
 ``` r
 table(cutree2, cutree3)
@@ -266,8 +266,8 @@ table(cutree2, cutree3)
 
     ##        cutree3
     ## cutree2  1  2  3
-    ##       1 56  0  0
-    ##       2  0 39 55
+    ##       1 59  0  0
+    ##       2  0 50 41
 
 Q. How does this compare to your known 'col' groups?
 
@@ -880,9 +880,9 @@ plot(pca$x[,1], pca$x[,2])
 
 ``` r
 ## lets do PCA
- pca <- prcomp(t(mydata), scale=TRUE)
- ## A basic PC1 vs PC2 2-D plot
- plot(pca$x[,1], pca$x[,2])
+pca <- prcomp(t(mydata), scale=TRUE)
+## A basic PC1 vs PC2 2-D plot
+plot(pca$x[,1], pca$x[,2])
 ```
 
 ![](class08_files/figure-markdown_github/unnamed-chunk-19-1.png)

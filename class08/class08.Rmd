@@ -14,9 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 Let's try out the **kmeans()** function in R with some made-up data
 kmeans(x, center (aka the number of groups), nstart (number of iterations))
 
+Generate some example data for clustering
+Remember that rnorm produces a random normal distribution of 30 samples with a mean of 3 or -3 (a third value would have been the standard deviation)
 ```{r}
-# Generate some example data for clustering
-# Remember that rnorm produces a random normal distribution of 30 samples with a mean of 3 or -3 (a third value would have been the standard deviation)
 tmp <- c(rnorm(30,-3), rnorm(30,3))
 x <- cbind(x=tmp, y=rev(tmp))
 plot(x)
@@ -48,7 +48,7 @@ km$cluster
 # Table should tell us how many 1's and 2's exist
 table(km$cluster)
 
-# Detemrines cluster centers
+# Determines cluster centers
 km$centers
 
 ```
@@ -135,7 +135,6 @@ table2
 ```
 
 ```{r}
-
 #For 3 clusters
 cutree3 <- cutree(hclust, k=3)
 cutree3
@@ -149,7 +148,6 @@ table(cutree2, cutree3)
 
 
 Q. How does this compare to your known 'col' groups?
-
 ```{r}
 plot(x, col=cutree3)
 ```
@@ -174,7 +172,6 @@ There are 'r nrow(mydata)' genes in this dataset. We can include R code in our t
 
 Let's do PCA
 NOTE: prcomp() expects the samples to be rows and genes to be columns so we need to first transpose the matrix with the t() function!
-
 ```{r}
 # t = transpose
 # Now your genes (which were originally rows) are now columns
@@ -200,9 +197,9 @@ plot(pca$x[,1], pca$x[,2])
 
 ```{r}
 ## lets do PCA
- pca <- prcomp(t(mydata), scale=TRUE)
- ## A basic PC1 vs PC2 2-D plot
- plot(pca$x[,1], pca$x[,2])
+pca <- prcomp(t(mydata), scale=TRUE)
+## A basic PC1 vs PC2 2-D plot
+plot(pca$x[,1], pca$x[,2])
 ## Percent variance is often more informative to look at
 pca.var <- pca$sdev^2
 pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
@@ -281,7 +278,6 @@ head(x)
 Q2. Which approach to solving the ‘row-names problem’ mentioned above do you prefer and why? Is one approach more robust than another under certain circumstances?
 
 A: I prefer the second method because it's simpler. And if you run the first method multiple times, the columns disappear one by one. 
-
 
 
 A cursory glance over the numbers in this table does not reveal much of anything. Indeed in general it is difficult to extract meaning in regard to major differences and trends from any given array of numbers. Generating regular bar-plots and various pairwise plots does not help too much either:
@@ -390,7 +386,6 @@ biplot(pca)
 
 
 ## PCA of RNA-Seq data
-
 
 ```{r}
 rna.data <- read.csv("expression.csv", row.names=1)
