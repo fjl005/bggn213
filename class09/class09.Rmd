@@ -233,7 +233,7 @@ Using the minimum number of principal components required to describe at least 9
 I am going to start with the PCs that capture 90% of the original variance in the dataset (i.e. PC1 to PC7).
 
 ```{r}
-wisc.pr$x[,1:7]
+head(wisc.pr$x[,1:7])
 wisc.pr.hclust <- hclust(dist(wisc.pr$x[,1:7]), method = "ward.D2")
 plot(wisc.pr.hclust)
 ```
