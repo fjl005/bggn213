@@ -20,7 +20,7 @@ My class content includes:
 
 - Class 13: [**Genome Informatics: Part 1**](https://github.com/fjl005/bggn213/blob/master/class13/class13.md)
 
-- Class 14: [**Genome Informatics: Part 2**](https://github.com/fjl005/bggn213/blob/master/class14/class14.md)
+- Class 14: [**Genome Informatics: Part 2**](https://github.com/fjl005/bggn213/blob/master/class14_new/class14.md)
 
 - Class 15: [**Pathway Analysis from RNA-Seq Results**](https://github.com/fjl005/bggn213/blob/master/class15_new/class15.md)
 
