@@ -14,22 +14,22 @@ Q1: What type of object is returned from the read.csv function? Check the right 
 
 fna.data <- "data/WisconsinCancer.csv"
 wisc.df <- read.csv("WisconsinCancer.csv")
-wisc.df
+head(wisc.df)
 ```
 
-Q2: How many patients are there? Use nrow to count the number of rows. 
+Q2: How many patients are there? Use nrow to count the number of rows. 569
 ```{r}
 numPatients <- nrow(wisc.df)
 numCol <- ncol(wisc.df)
 ```
 
 
-Q3: How many observations have a malignant diagnosis?
+Q3: How many observations have a malignant diagnosis? 212
 ```{r}
 table(wisc.df$diagnosis)
 ```
 
-Q4: How many variables/features in the data are suffixed with _mean?
+Q4: How many variables/features in the data are suffixed with _mean? 10
 ```{r}
 grep("_mean", colnames(wisc.df))
 length(grep("_mean", colnames(wisc.df)))
@@ -38,12 +38,13 @@ length(grep("_mean", colnames(wisc.df)))
 Q5: Why do you think we're using the indices 3:32 here?
 The first 2 columns and the last column are not numerical values, but string values. 
 ```{r}
-wisc.df
+head(wisc.df)
 View(wisc.df)
 wisc.data <- as.matrix(wisc.df[,3:32])
 wisc.data
 ```
 
+Q6. True or False? The data need to be scaled before PCA. TRUE
 
 ```{r}
 row.names(wisc.data) <- wisc.df$id
@@ -85,7 +86,7 @@ Q7. From your results, what proportion of the original variance is captured by t
 
 Q8. How many principal components (PCs) are required to describe at least 70% of the original variance in the data? 3
 
-Q9. How many principal components (PCs) are required to describe at least 90% of the original variance in the data? 
+Q9. How many principal components (PCs) are required to describe at least 90% of the original variance in the data? 7
 
 
 Now you will use some visualizations to better understand your PCA model. A common visualization for PCA results is the so-called biplot.
@@ -101,13 +102,15 @@ Q11. Generate a PC1 vs PC2 plot as described above colored by diagnosis. What do
 ```{r}
 plot(wisc.pr$x[,1], wisc.pr$x[,2], col = diagnosis, xlab = "PC1", ylab = "PC2")
 ```
-
+Grey = malignant, Red = benign. Each point in this plot is a patient. 
 
 Q12. Generate a similar plot for principal components 1 and 3. What do you notice about these plots?
 ```{r}
 plot(wisc.pr$x[,1], wisc.pr$x[,3], col = diagnosis, 
      xlab = "PC1", ylab = "PC3")
 ```
+Because principal component 2 explains more variance in the original data than principal component 3, you can see that the first plot has a cleaner cut separating the two subgroups.
+
 
 ```{r}
 plot(wisc.pr$x[,2], wisc.pr$x[,3], col = diagnosis, 
@@ -115,7 +118,6 @@ plot(wisc.pr$x[,2], wisc.pr$x[,3], col = diagnosis,
 ```
 
 PC3 only captures 9% of the variance (based on the proportion of variance). PC1 vs. PC2 demonstrates the best plot. 
-
 
 Calculate the variance of each component.
 ```{r}
@@ -142,7 +144,7 @@ axis(2, at=pve, labels=round(pve,2)*100 )
 In this section we will check your understanding of the PCA results, in particular the loadings and variance explained. The loadings, represented as vectors, explain the mapping from the original features to the principal components. The principal components are naturally ordered from the most variance explained to the least variance explained.
 
 
-Q13. For the first principal component, and using two significant figures , what is the component of the loading vector (i.e. wisc.pr$rotation[,1]) for the feature  radius_mean?
+Q13. For the first principal component, and using two significant figures , what is the component of the loading vector (i.e. wisc.pr$rotation[,1]) for the feature  radius_mean? -0.22
 ```{r}
 round(wisc.pr$rotation[,1], 2)
 
@@ -152,14 +154,14 @@ round(wisc.pr$rotation["radius_mean",1], 2)
 
 ```
 
-Q14. For the first principal component, and using two significant figures, what is the component of the loading vector (i.e. wisc.pr$rotation[,1]) for the feature  smoothness_se?
+Q14. For the first principal component, and using two significant figures, what is the component of the loading vector (i.e. wisc.pr$rotation[,1]) for the feature  smoothness_se? -0.01
 ```{r}
 # Access the contribution of one variable on PC1
 round(wisc.pr$rotation["smoothness_se",1], 2)
 
 ```
 
-Q15. Which original variable contributes most to PC1?
+Q15. Which original variable contributes most to PC1? concave points_mean
 ```{r}
 # Sort the loadings values by their absolute contribution to PC1
 order <- sort(abs(wisc.pr$rotation[,1]), decreasing = TRUE)
@@ -190,8 +192,7 @@ head(wisc.hclust)
 ```
 
 
-Q16. Using the plot() and abline() functions, what is the height at which the clustering model has 4 clusters?
-
+Q16. Using the plot() and abline() functions, what is the height at which the clustering model has 4 clusters? Height of 19
 ```{r}
 plot(wisc.hclust)
 abline(h=19, col="red", lty=2)
@@ -215,6 +216,13 @@ table(wisc.hclust.clusters, diagnosis)
 
 ```
 
+We can think in terms of TRUE positive, TRUE negative, FALSE positive and FALSE negative as we discussed back in an earlier class. Also recall that we discussed the concepts of sensitivity, specificity and ROC/AUC analysis.
+
+Sensitivity refers to a test's ability to correctly detect ill patients who do have the condition. In our example here the sensitivity is the total number of samples in the cluster identified as predominantly malignant (cancerous) divided by the total number of known malignant samples.
+
+Specificity relates to a test's ability to correctly reject healthy patients without a condition. In our example specificity is the proportion of benign (not cancerous) samples in the cluster identified as predominantly benign that are known to be benign.
+
+Take-home. There is a judgment call here on your part: Which of your analysis procedures resulted in a clustering model with the best specificity? How about sensitivity? Which would you prefer to optimize for in this particular case?
 
 
 ## Skipping to section 5: Combining methods (PCA + hclust)
@@ -236,10 +244,18 @@ grps <- cutree(wisc.pr.hclust, k=2)
 table(grps)
 ```
 
+Q19. How well does the newly created model with four clusters separate out the two diagnoses? 
 ```{r}
 table(grps, diagnosis)
 
 ```
+
+Q20. How well do the k-means and hierarchical clustering models you created in previous sections (i.e. before PCA) do in terms of separating the diagnoses? Again, use the table() function to compare the output of each model (wisc.km$cluster and wisc.hclust.clusters) with the vector containing the actual diagnoses.
+```{r}
+table(wisc.km$cluster, diagnosis)
+table(wisc.hclust.clusters, diagnosis)
+ß```
+
 
 ```{r}
 plot(wisc.pr$x[,1], wisc.pr$x[,2], col=grps)
