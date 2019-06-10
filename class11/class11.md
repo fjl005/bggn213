@@ -4,7 +4,7 @@ Class 11: Structural Bioinformatics (Part 1)
 Revisit the PDB
 ---------------
 
-Q1.Open RStudio and begin a new class11 project within your GitHub tacked directory/folder from last day. Make sure “Create a git repository” option is NOT ticked. This is because we want to use the same git repository as we used last day and not start a new one - if you are not sure what this means ask Barry now!
+Q1. Open RStudio and begin a new class11 project within your GitHub tacked directory/folder from last day. Make sure “Create a git repository” option is NOT ticked. This is because we want to use the same git repository as we used last day and not start a new one - if you are not sure what this means ask Barry now!
 
 Download a CSV file from <http://www.rcsb.org/stats/summary> on 2019-05-08
 
@@ -28,7 +28,7 @@ sum(db$Total)
     ## [1] 151754
 
 ``` r
-## Perccent of each experiment method
+## Percent of each experiment method
 rowSums(db[,1:4])
 ```
 
@@ -288,15 +288,13 @@ view(pdb, "overview", col="sse")
 
     ## Computing connectivity from coordinates...
 
-For some reason, this part of the code doesn't work (the next few lines from here until the start of Section 6)
-
 ``` r
 library(bio3d.view)
 # Structural displacements captured by PC1
 #view(pc1)
 # The rglwidget() function from the rgl # package will show output in your Rmd 
 # notebook and rendered html_output documents
-library(rgl) 
+#library(rgl) 
 #rglwidget(pc1)
 ```
 
