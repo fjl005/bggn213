@@ -1,0 +1,9 @@
+---
+title: "Class 5: R Graphics"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+

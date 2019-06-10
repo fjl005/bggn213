@@ -6,22 +6,22 @@ April 17, 2019
 ``` r
 # Class05 R graphics and plots
 
-# get the data in
+# Get the data in
 weight <- read.table("bimm143_05_rstats 2//weight_chart.txt", 
                      header = TRUE)
 
-# plot a scatterplot of age vs weight
+# Plot a scatterplot of age vs weight
 
 plot(weight$Age, weight$Weight, pch=15, cex=1.5, lwd=2, ylim = c(2,10),
-     xlab= "Age (months)", ylab="Weight (kg)", main = "Some title",
+     xlab= "Age (months)", ylab="Weight (kg)", main = "Baby Weight with Age",
      type = "o")
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
 ``` r
-# get the feature_counts.txt data in
-# use "\t" to indicate that the data are separated by a tab
+# Get the feature_counts.txt data in
+# Use "\t" to indicate that the data are separated by a tab
 featureCounts <- read.table("bimm143_05_rstats 2//feature_counts.txt",
                             header = TRUE, sep = "\t")
 
@@ -44,54 +44,58 @@ read.delim("bimm143_05_rstats 2//feature_counts.txt")
     ## 12          Ribosomal RNAs   341
 
 ``` r
-barplot(featureCounts$Count, horiz=TRUE, ylab ="a Title", 
-        names.arg = featureCounts$Feature, main = "Some Title", 
-        las = 1)
-
-# my labels are clipped I need to change the margins
-old.par <- par()$mar
-
-# set new parameters of the graph
-par(mar=c(5, 11, 4, 1))
-
-# replot the graph after setting new parameters
-barplot(featureCounts$Count, horiz=TRUE, ylab ="a Title", 
-        names.arg = featureCounts$Feature, main = "Some Title", 
-        las = 1)
+barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
+        names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
+        las = 1, xlim = c(0,80000))
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-2.png)
 
 ``` r
-# reset the parameters back to normal after plotting
-par(mar = old.par)
-plot(1:10, typ="l")
+# My labels are clipped I need to change the margins
+old.par <- par()$mar
+
+# Set new parameters of the graph
+par(mar=c(5, 12, 5, 4))
+
+# Replot the graph after setting new parameters
+barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
+        names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
+        las = 1)
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-3.png)
 
 ``` r
-# bring in third set of data
-maleFemale <- read.delim("bimm143_05_rstats 2/male_female_counts.txt",
-                         header = TRUE, sep = "\t")
-
-# you could alternate the colors with col = (some vector of colors)
-barplot(maleFemale$Count, names.arg=maleFemale$Sample, las = 2,
-        col = c("red", "blue"))
+# Reset the parameters back to normal after plotting
+par(mar = old.par)
+plot(1:10, typ="l")
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-4.png)
 
 ``` r
-# argument for col could be a number
+# Bring in third set of data
+maleFemale <- read.delim("bimm143_05_rstats 2/male_female_counts.txt",
+                         header = TRUE, sep = "\t")
+
+# You could alternate the colors with col = (some vector of colors)
 barplot(maleFemale$Count, names.arg=maleFemale$Sample, las = 2,
-        col = heat.colors(10))
+        col = c("red", "blue"), ylab = "Counts")
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-5.png)
 
 ``` r
-# shows all the number codes for each color
+# Argument for col could be a number
+barplot(maleFemale$Count, names.arg=maleFemale$Sample, las = 2,
+        col = heat.colors(10))
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-6.png)
+
+``` r
+# Shows all the number codes for each color
 colours()
 ```
 
@@ -323,7 +327,7 @@ rainbow(10)
     ##  [6] "#00FFFFFF" "#0066FFFF" "#3300FFFF" "#CC00FFFF" "#FF0099FF"
 
 ``` r
-# bring in last set of data
+# Bring in last set of data
 genes <- read.delim("bimm143_05_rstats 2/up_down_expression.txt",
                      header = TRUE, sep = "\t")
 
@@ -371,22 +375,79 @@ plot(genes$Condition1, genes$Condition2,
      ylab = "Expression Condition 2")
 ```
 
-![](class05_files/figure-markdown_github/unnamed-chunk-1-6.png)
+![](class05_files/figure-markdown_github/unnamed-chunk-1-7.png)
 
 ``` r
-# Use this to set the palette of the colors that will show up on
-# the plot
+# Use this to set the palette of the colors that will show up on the plot
 old.palette <-palette()
 mynewcols <- palette(c("red", "grey", "blue"))
 plot(genes$Condition1, genes$Condition2, 
      col = genes$State, xlab = "Expression Condition 1",
-     ylab = "Expression Condition 2", main = "Some Title")
+     ylab = "Expression Condition 2", main = "Up/Down Expression Comparison")
 ```
 
-![](class05_files/figure-markdown_github/unnamed-chunk-1-7.png)
+![](class05_files/figure-markdown_github/unnamed-chunk-1-8.png)
 
 ``` r
 levels(genes$State)
 ```
 
     ## [1] "down"       "unchanging" "up"
+
+``` r
+# Meth Expression
+meth <- read.delim("bimm143_05_rstats 2/expression_methylation.txt")
+nrow(meth)
+```
+
+    ## [1] 9241
+
+``` r
+length(meth$X)
+```
+
+    ## [1] 9241
+
+``` r
+plot(meth$gene.meth, meth$expression)
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-9.png)
+
+``` r
+# This is a busy plot with lots of data points in top of one another.
+# Let improve it a little by coloring by point density.
+dcols <- densCols(meth$gene.meth, meth$expression)
+plot(meth$gene.meth, meth$expression, col = dcols, pch = 20)
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-10.png)
+
+``` r
+# It looks like most of the data is clustered near the origin.
+# Lets restrict ourselves to the genes that have more than zero "expression" values
+inds <- meth$expression > 0
+plot(meth$gene.meth[inds], meth$expression[inds])
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-11.png)
+
+``` r
+dcols <- densCols(meth$gene.meth[inds], meth$expression[inds])
+plot(meth$gene.meth[inds], meth$expression[inds], col = dcols, pch = 20)
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-12.png)
+
+``` r
+dcols.custom <- densCols(meth$gene.meth[inds], meth$expression[inds],
+                         colramp = colorRampPalette(c("blue2",
+                                                      "green2",
+                                                      "red2",
+                                                      "yellow")) )
+
+plot(meth$gene.meth[inds], meth$expression[inds], 
+     col = dcols.custom, pch = 20)
+```
+
+![](class05_files/figure-markdown_github/unnamed-chunk-1-13.png)
