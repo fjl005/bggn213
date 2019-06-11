@@ -4,6 +4,8 @@ This is my coursework from [BGGN-213 at UC San Diego](https://bioboot.github.io/
 
 My class content includes:
 
+- Class 04: [**R Language Basics**](https://github.com/fjl005/bggn213/blob/master/class04/class04.md)
+
 - Class 05: [**R Graphics**](https://github.com/fjl005/bggn213/blob/master/class05/class05.md).
 
 - Class 06: [**R Functions**](https://github.com/fjl005/bggn213/blob/master/class06/class06.md)
