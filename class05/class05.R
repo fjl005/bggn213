@@ -27,7 +27,7 @@ read.delim("bimm143_05_rstats 2//feature_counts.txt")
 
 barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
         names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
-        las = 1, xlim = c(0,80000))
+        las = 1)
 
 # My labels are clipped I need to change the margins
 old.par <- par()$mar
@@ -38,7 +38,7 @@ par(mar=c(5, 12, 5, 4))
 # Replot the graph after setting new parameters
 barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
         names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
-        las = 1)
+        las = 1, xlim = c(0,80000))
 
 # Reset the parameters back to normal after plotting
 par(mar = old.par)
@@ -119,3 +119,4 @@ dcols.custom <- densCols(meth$gene.meth[inds], meth$expression[inds],
 
 plot(meth$gene.meth[inds], meth$expression[inds], 
      col = dcols.custom, pch = 20)
+

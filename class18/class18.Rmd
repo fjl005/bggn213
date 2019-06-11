@@ -91,11 +91,12 @@ library("bio3d")
 ```
 
 ```{r}
-fasta <- read.fasta("~/Downloads/lecture18_sequences.fa")
+seqs <- read.fasta("~/Downloads/lecture18_sequences.fa")
+seqs
 ```
 
 ```{r}
-seqs <- seqaln(fasta)
+#seqs <- seqaln(fasta)
 ```
 
 ```{r}
@@ -125,12 +126,12 @@ end.ind <-  ind[1] + 8
 end.ind
 
 df <- data.frame(1:length(ind), 1:length(ind))
-df
+head(df)
 
 df[1, 1] = start.ind
 df[1, 2] = end.ind
 
-df
+head(df)
 
 # for (i in 1) {
 #   start.ind <- ind[i] - 8

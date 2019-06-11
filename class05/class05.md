@@ -46,7 +46,7 @@ read.delim("bimm143_05_rstats 2//feature_counts.txt")
 ``` r
 barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
         names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
-        las = 1, xlim = c(0,80000))
+        las = 1)
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-2.png)
@@ -61,7 +61,7 @@ par(mar=c(5, 12, 5, 4))
 # Replot the graph after setting new parameters
 barplot(featureCounts$Count, horiz=TRUE, xlab ="Counts", 
         names.arg = featureCounts$Feature, main = "Number of Features in GRCm38 Genome", 
-        las = 1)
+        las = 1, xlim = c(0,80000))
 ```
 
 ![](class05_files/figure-markdown_github/unnamed-chunk-1-3.png)
