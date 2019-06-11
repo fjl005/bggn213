@@ -48,7 +48,7 @@ is.numeric(x)
 !is.numeric(x)
 ```
 
-This code is already in the source that we installed It uses a stop function A warning could have been used to. Difference between stop() and warning() is that warning will continue going while stop will terminate the code
+This code is already in the source that we installed. It uses a stop function. A warning could have been used to. Difference between stop() and warning() is that warning will continue going while stop will terminate the code.
 
 ``` r
 rescale2 <- function(x, na.rm=TRUE, plot=FALSE, ...) {
