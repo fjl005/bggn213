@@ -534,7 +534,7 @@ pathview(gene.data=foldchanges, pathway.id="hsa04110")
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04110.pathview.png
 
@@ -545,7 +545,7 @@ pathview(gene.data=foldchanges, pathway.id="hsa04110", kegg.native=FALSE)
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04110.pathview.pdf
 
@@ -568,7 +568,7 @@ pathview(gene.data=foldchanges, pathway.id=keggresids, species="hsa")
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04740.pathview.png
 
@@ -576,7 +576,7 @@ pathview(gene.data=foldchanges, pathway.id=keggresids, species="hsa")
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04640.pathview.png
 
@@ -1272,19 +1272,19 @@ pathview(gene.data=foldchanges, pathway.id=keggresids, species="hsa")
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa00140.pathview.png
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04630.pathview.png
 
     ## 'select()' returned 1:1 mapping between keys and columns
 
-    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15
+    ## Info: Working in directory /Users/franklee/Desktop/BGGN 213/bggn213_github/class15_new
 
     ## Info: Writing image file hsa04976.pathview.png
 
@@ -1381,3 +1381,13 @@ print(paste("Total number of significant genes:", length(sig_genes)))
 ```
 
     ## [1] "Total number of significant genes: 8146"
+
+``` r
+write.table(sig_genes, file = "significant_genes.txt", row.names=FALSE, col.names=FALSE, quote=FALSE)
+```
+
+Then, to perform pathway analysis online go to the Reactome website (<https://reactome.org/PathwayBrowser/#TOOL=AT>). Select “choose file” to upload your significant gene list. Then, select the parameters “Project to Humans”, then click “Analyze”.
+
+Q: What pathway has the most significant “Entities p-value”? Do the most significant pathways listed match your previous KEGG results? What factors could cause differences between the two methods?
+
+The Endosomal/Vacuolar pathway has the most significant "entities p-value" of 8.61E-4.

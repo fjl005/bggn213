@@ -242,4 +242,12 @@ sig_genes <- res[res$padj <= 0.05 & !is.na(res$padj), "symbol"]
 print(paste("Total number of significant genes:", length(sig_genes)))
 ```
 
+```{r}
+write.table(sig_genes, file = "significant_genes.txt", row.names=FALSE, col.names=FALSE, quote=FALSE)
+```
 
+Then, to perform pathway analysis online go to the Reactome website (https://reactome.org/PathwayBrowser/#TOOL=AT). Select “choose file” to upload your significant gene list. Then, select the parameters “Project to Humans”, then click “Analyze”.
+
+Q: What pathway has the most significant “Entities p-value”? Do the most significant pathways listed match your previous KEGG results? What factors could cause differences between the two methods?
+
+The Endosomal/Vacuolar pathway has the most significant "entities p-value" of 8.61E-4. 
