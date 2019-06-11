@@ -1,0 +1,83 @@
+---
+title: "Class 4: Bioinformatics Data Analysis with R"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Background:
+R is powerful data programming language that you can use to explore and understand data in an open-ended, highly interactive, iterative way. Learning R will give you the freedom to experiment and problem solve during data analysis — exactly what we need as bioinformaticians.
+
+Simple Calculations
+```{r}
+5+3
+5-3
+5*3
+5/3
+
+```
+
+Object names cannot start with a digit and cannot contain certain other characters such as a comma or a space.
+
+```{r}
+x <- 3*4
+x
+```
+
+```{r}
+seq(1,10)
+```
+
+```{r}
+seq(1,10, by=2)
+```
+
+```{r}
+example(seq)
+```
+
+Help function
+```{r}
+help(log)
+```
+
+Vectors: a container of contiguous data. Values are not stored as scalar; rather, as a vector of length 1. 
+```{r}
+length(3.1)
+```
+
+```{r}
+x <- c(56, 95.3, 0.4)
+y <- c(3.2, 1.1, 0.2)
+
+x
+y
+
+x+y
+x-y
+x/y
+```
+
+
+```{r}
+sqrt(x)
+round(sqrt(x),3)
+log(x)/2 + 1
+
+x[2]
+x[3] <- 0.5
+x
+```
+
+```{r}
+x <- 1:50
+plot(x, sin(x), typ="l", col="red")
+
+```
+
+```{r}
+plot(x, sin(x), typ="l", col="blue", lwd=3, xlab="x = 1:50")
+```
+
