@@ -54,16 +54,16 @@ status()
 ```
 
     ## $commit
-    ## [1] "e588f035feefee17f562b3a1bc2816c49a2b2b19"
+    ## [1] "3e22a4257d5079ae9f7193950b51ed9dfc561ed1"
     ## 
     ## $data_release
-    ## [1] "Data Release 16.0 - March 26, 2019"
+    ## [1] "Data Release 17.0 - June 05, 2019"
     ## 
     ## $status
     ## [1] "OK"
     ## 
     ## $tag
-    ## [1] "1.20.0"
+    ## [1] "1.21.0"
     ## 
     ## $version
     ## [1] 1
@@ -79,47 +79,54 @@ head(projects)
 ```
 
     ##   dbgap_accession_number
-    ## 1                   <NA>
-    ## 2              phs000466
-    ## 3                   <NA>
-    ## 4                   <NA>
-    ## 5              phs001444
-    ## 6              phs000471
-    ##                                                          disease_type
-    ## 1 Cystic, Mucinous and Serous Neoplasms, Adenomas and Adenocarcinomas
-    ## 2                                    Clear Cell Sarcoma of the Kidney
-    ## 3                                               Mesothelial Neoplasms
-    ## 4                                        Adenomas and Adenocarcinomas
-    ## 5                     Lymphoid Neoplasm Diffuse Large B-cell Lymphoma
-    ## 6                                               High-Risk Wilms Tumor
+    ## 1              phs001287
+    ## 2              phs001374
+    ## 3              phs001628
+    ## 4              phs000466
+    ## 5              phs000467
+    ## 6              phs001179
+    ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 disease_type
+    ## 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Adenomas and Adenocarcinomas
+    ## 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Epithelial Neoplasms, NOS, Squamous Cell Neoplasms
+    ## 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Myeloid Leukemias
+    ## 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Clear Cell Sarcoma of the Kidney
+    ## 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Neuroblastoma
+    ## 6 Germ Cell Neoplasms, Acinar Cell Neoplasms, Miscellaneous Tumors, Thymic Epithelial Neoplasms, Gliomas, Basal Cell Neoplasms, Neuroepitheliomatous Neoplasms, Ductal and Lobular Neoplasms, Complex Mixed and Stromal Neoplasms, Complex Epithelial Neoplasms, Adnexal and Skin Appendage Neoplasms, Mesothelial Neoplasms, Mucoepidermoid Neoplasms, Not Reported, Specialized Gonadal Neoplasms, Cystic, Mucinous and Serous Neoplasms, Adenomas and Adenocarcinomas, Epithelial Neoplasms, NOS, Squamous Cell Neoplasms, Transitional Cell Papillomas and Carcinomas, Paragangliomas and Glomus Tumors, Nevi and Melanomas, Meningiomas
     ##   releasable released state
     ## 1      FALSE     TRUE  open
     ## 2      FALSE     TRUE  open
     ## 3      FALSE     TRUE  open
-    ## 4      FALSE     TRUE  open
-    ## 5      FALSE     TRUE  open
+    ## 4       TRUE     TRUE  open
+    ## 5       TRUE     TRUE  open
     ## 6      FALSE     TRUE  open
-    ##                                                                                     primary_site
-    ## 1 Rectosigmoid junction, Unknown, Rectum, Colon, Connective, subcutaneous and other soft tissues
-    ## 2                                                                                         Kidney
-    ## 3                                              Heart, mediastinum, and pleura, Bronchus and lung
-    ## 4   Other and unspecified parts of biliary tract, Gallbladder, Liver and intrahepatic bile ducts
-    ## 5                                                                                    Lymph Nodes
-    ## 6                                                                                         Kidney
-    ##     project_id           id
-    ## 1    TCGA-READ    TCGA-READ
-    ## 2  TARGET-CCSK  TARGET-CCSK
-    ## 3    TCGA-MESO    TCGA-MESO
-    ## 4    TCGA-CHOL    TCGA-CHOL
-    ## 5 NCICCR-DLBCL NCICCR-DLBCL
-    ## 6    TARGET-WT    TARGET-WT
-    ##                                                  name tumor
-    ## 1                               Rectum Adenocarcinoma  READ
-    ## 2                    Clear Cell Sarcoma of the Kidney  CCSK
-    ## 3                                        Mesothelioma  MESO
-    ## 4                                  Cholangiocarcinoma  CHOL
-    ## 5 Genomic Variation in Diffuse Large B Cell Lymphomas DLBCL
-    ## 6                               High-Risk Wilms Tumor    WT
+    ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               primary_site
+    ## 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Kidney, Bronchus and lung, Uterus, NOS
+    ## 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Bronchus and lung
+    ## 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Hematopoietic and reticuloendothelial systems
+    ## 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Kidney
+    ## 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Nervous System
+    ## 6 Testis, Gallbladder, Unknown, Other and unspecified parts of biliary tract, Adrenal gland, Thyroid gland, Spinal cord, cranial nerves, and other parts of central nervous system, Peripheral nerves and autonomic nervous system, Stomach, Cervix uteri, Bladder, Small intestine, Breast, Prostate gland, Other and unspecified female genital organs, Other and unspecified major salivary glands, Rectum, Retroperitoneum and peritoneum, Pancreas, Heart, mediastinum, and pleura, Bronchus and lung, Liver and intrahepatic bile ducts, Other and ill-defined sites, Thymus, Penis, Nasopharynx, Ovary, Uterus, NOS, Vulva, Anus and anal canal, Other and unspecified urinary organs, Trachea, Ureter, Other endocrine glands and related structures, Not Reported, Colon, Kidney, Vagina, Skin, Esophagus, Eye and adnexa, Other and ill-defined digestive organs
+    ##              project_id                    id
+    ## 1               CPTAC-3               CPTAC-3
+    ## 2        VAREPOP-APOLLO        VAREPOP-APOLLO
+    ## 3 BEATAML1.0-CRENOLANIB BEATAML1.0-CRENOLANIB
+    ## 4           TARGET-CCSK           TARGET-CCSK
+    ## 5            TARGET-NBL            TARGET-NBL
+    ## 6                 FM-AD                 FM-AD
+    ##                                                                                              name
+    ## 1                                                                                                
+    ## 2                                                          VA Research Precision Oncology Program
+    ## 3 Clinical Resistance to Crenolanib in Acute Myeloid Leukemia Due to Diverse Molecular Mechanisms
+    ## 4                                                                Clear Cell Sarcoma of the Kidney
+    ## 5                                                                                   Neuroblastoma
+    ## 6                                       Foundation Medicine Adult Cancer Clinical Dataset (FM-AD)
+    ##        tumor
+    ## 1          3
+    ## 2     APOLLO
+    ## 3 CRENOLANIB
+    ## 4       CCSK
+    ## 5        NBL
+    ## 6         AD
 
 ``` r
 cases_by_project <- cases() %>%
@@ -129,52 +136,54 @@ head(cases_by_project)
 ```
 
     ## $project.project_id
-    ##               key doc_count
-    ## 1           FM-AD     18004
-    ## 2      TARGET-NBL      1127
-    ## 3       TCGA-BRCA      1098
-    ## 4      TARGET-AML       988
-    ## 5       TARGET-WT       652
-    ## 6        TCGA-GBM       617
-    ## 7         TCGA-OV       608
-    ## 8       TCGA-LUAD       585
-    ## 9       TCGA-UCEC       560
-    ## 10      TCGA-KIRC       537
-    ## 11      TCGA-HNSC       528
-    ## 12       TCGA-LGG       516
-    ## 13      TCGA-THCA       507
-    ## 14      TCGA-LUSC       504
-    ## 15      TCGA-PRAD       500
-    ## 16   NCICCR-DLBCL       489
-    ## 17      TCGA-SKCM       470
-    ## 18      TCGA-COAD       461
-    ## 19      TCGA-STAD       443
-    ## 20      TCGA-BLCA       412
-    ## 21      TARGET-OS       381
-    ## 22      TCGA-LIHC       377
-    ## 23        CPTAC-3       322
-    ## 24      TCGA-CESC       307
-    ## 25      TCGA-KIRP       291
-    ## 26      TCGA-SARC       261
-    ## 27      TCGA-LAML       200
-    ## 28      TCGA-ESCA       185
-    ## 29      TCGA-PAAD       185
-    ## 30      TCGA-PCPG       179
-    ## 31      TCGA-READ       172
-    ## 32      TCGA-TGCT       150
-    ## 33  TARGET-ALL-P3       131
-    ## 34      TCGA-THYM       124
-    ## 35      TCGA-KICH       113
-    ## 36       TCGA-ACC        92
-    ## 37      TCGA-MESO        87
-    ## 38       TCGA-UVM        80
-    ## 39      TARGET-RT        75
-    ## 40      TCGA-DLBC        58
-    ## 41       TCGA-UCS        57
-    ## 42      TCGA-CHOL        51
-    ## 43    CTSP-DLBCL1        45
-    ## 44    TARGET-CCSK        13
-    ## 45 VAREPOP-APOLLO         7
+    ##                      key doc_count
+    ## 1                  FM-AD     18004
+    ## 2             TARGET-NBL      1120
+    ## 3              TCGA-BRCA      1098
+    ## 4             TARGET-AML       988
+    ## 5              TARGET-WT       652
+    ## 6               TCGA-GBM       617
+    ## 7                TCGA-OV       608
+    ## 8              TCGA-LUAD       585
+    ## 9              TCGA-UCEC       560
+    ## 10             TCGA-KIRC       537
+    ## 11             TCGA-HNSC       528
+    ## 12              TCGA-LGG       516
+    ## 13             TCGA-THCA       507
+    ## 14             TCGA-LUSC       504
+    ## 15             TCGA-PRAD       500
+    ## 16          NCICCR-DLBCL       489
+    ## 17             TCGA-SKCM       470
+    ## 18             TCGA-COAD       461
+    ## 19             TCGA-STAD       443
+    ## 20             TCGA-BLCA       412
+    ## 21             TARGET-OS       381
+    ## 22             TCGA-LIHC       377
+    ## 23               CPTAC-3       322
+    ## 24             TCGA-CESC       307
+    ## 25             TCGA-KIRP       291
+    ## 26             TCGA-SARC       261
+    ## 27             TCGA-LAML       200
+    ## 28             TCGA-ESCA       185
+    ## 29             TCGA-PAAD       185
+    ## 30             TCGA-PCPG       179
+    ## 31             TCGA-READ       172
+    ## 32             TCGA-TGCT       150
+    ## 33         TARGET-ALL-P3       131
+    ## 34             TCGA-THYM       124
+    ## 35             TCGA-KICH       113
+    ## 36              TCGA-ACC        92
+    ## 37             TCGA-MESO        87
+    ## 38              TCGA-UVM        80
+    ## 39             TARGET-RT        75
+    ## 40             TCGA-DLBC        58
+    ## 41              TCGA-UCS        57
+    ## 42 BEATAML1.0-CRENOLANIB        56
+    ## 43             TCGA-CHOL        51
+    ## 44           CTSP-DLBCL1        45
+    ## 45           TARGET-CCSK        13
+    ## 46             HCMI-CMDC         7
+    ## 47        VAREPOP-APOLLO         7
 
 Q9. Write the R code to make a barplot of the cases per project. Lets plot this data with a log scale for the y axis (log="y"), rotated axis labels (las=2) and color the bar coresponding to the TCGA-PAAD project.
 
@@ -185,7 +194,7 @@ head(x)
 
     ##          key doc_count
     ## 1      FM-AD     18004
-    ## 2 TARGET-NBL      1127
+    ## 2 TARGET-NBL      1120
     ## 3  TCGA-BRCA      1098
     ## 4 TARGET-AML       988
     ## 5  TARGET-WT       652
@@ -220,11 +229,65 @@ library("bio3d")
 ```
 
 ``` r
-fasta <- read.fasta("~/Downloads/lecture18_sequences.fa")
+seqs <- read.fasta("~/Downloads/lecture18_sequences.fa")
+seqs
 ```
 
+    ##              1        .         .         .         .         .         60 
+    ## P53_wt       MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP
+    ## P53_mutant   MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMLDLMLSPDDIEQWFTEDPGP
+    ##              **************************************** ******************* 
+    ##              1        .         .         .         .         .         60 
+    ## 
+    ##             61        .         .         .         .         .         120 
+    ## P53_wt       DEAPRMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKTYQGSYGFRLGFLHSGTAK
+    ## P53_mutant   DEAPWMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKTYQGSYGFRLGFLHSGTAK
+    ##              **** ******************************************************* 
+    ##             61        .         .         .         .         .         120 
+    ## 
+    ##            121        .         .         .         .         .         180 
+    ## P53_wt       SVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHE
+    ## P53_mutant   SVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHE
+    ##              ************************************************************ 
+    ##            121        .         .         .         .         .         180 
+    ## 
+    ##            181        .         .         .         .         .         240 
+    ## P53_wt       RCSDSDGLAPPQHLIRVEGNLRVEYLDDRNTFRHSVVVPYEPPEVGSDCTTIHYNYMCNS
+    ## P53_mutant   RCSDSDGLAPPQHLIRVEGNLRVEYLDDRNTFVHSVVVPYEPPEVGSDCTTIHYNYMCNS
+    ##              ******************************** *************************** 
+    ##            181        .         .         .         .         .         240 
+    ## 
+    ##            241        .         .         .         .         .         300 
+    ## P53_wt       SCMGGMNRRPILTIITLEDSSGNLLGRNSFEVRVCACPGRDRRTEEENLRKKGEPHHELP
+    ## P53_mutant   SCMGGMNRRPILTIITLEV-----------------------------------------
+    ##              ******************                                           
+    ##            241        .         .         .         .         .         300 
+    ## 
+    ##            301        .         .         .         .         .         360 
+    ## P53_wt       PGSTKRALPNNTSSSPQPKKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPG
+    ## P53_mutant   ------------------------------------------------------------
+    ##                                                                           
+    ##            301        .         .         .         .         .         360 
+    ## 
+    ##            361        .         .         .  393 
+    ## P53_wt       GSRAHSSHLKSKKGQSTSRHKKLMFKTEGPDSD
+    ## P53_mutant   ---------------------------------
+    ##                                                
+    ##            361        .         .         .  393 
+    ## 
+    ## Call:
+    ##   read.fasta(file = "~/Downloads/lecture18_sequences.fa")
+    ## 
+    ## Class:
+    ##   fasta
+    ## 
+    ## Alignment dimensions:
+    ##   2 sequence rows; 393 position columns (259 non-gap, 134 gap) 
+    ## 
+    ## + attr: id, ali, call
+
 ``` r
-seqs <- seqaln(fasta)
+#seqs <- seqaln(fasta)
 ```
 
 ``` r
@@ -305,295 +368,31 @@ end.ind
 
 ``` r
 df <- data.frame(1:length(ind), 1:length(ind))
-df
+head(df)
 ```
 
-    ##     X1.length.ind. X1.length.ind..1
-    ## 1                1                1
-    ## 2                2                2
-    ## 3                3                3
-    ## 4                4                4
-    ## 5                5                5
-    ## 6                6                6
-    ## 7                7                7
-    ## 8                8                8
-    ## 9                9                9
-    ## 10              10               10
-    ## 11              11               11
-    ## 12              12               12
-    ## 13              13               13
-    ## 14              14               14
-    ## 15              15               15
-    ## 16              16               16
-    ## 17              17               17
-    ## 18              18               18
-    ## 19              19               19
-    ## 20              20               20
-    ## 21              21               21
-    ## 22              22               22
-    ## 23              23               23
-    ## 24              24               24
-    ## 25              25               25
-    ## 26              26               26
-    ## 27              27               27
-    ## 28              28               28
-    ## 29              29               29
-    ## 30              30               30
-    ## 31              31               31
-    ## 32              32               32
-    ## 33              33               33
-    ## 34              34               34
-    ## 35              35               35
-    ## 36              36               36
-    ## 37              37               37
-    ## 38              38               38
-    ## 39              39               39
-    ## 40              40               40
-    ## 41              41               41
-    ## 42              42               42
-    ## 43              43               43
-    ## 44              44               44
-    ## 45              45               45
-    ## 46              46               46
-    ## 47              47               47
-    ## 48              48               48
-    ## 49              49               49
-    ## 50              50               50
-    ## 51              51               51
-    ## 52              52               52
-    ## 53              53               53
-    ## 54              54               54
-    ## 55              55               55
-    ## 56              56               56
-    ## 57              57               57
-    ## 58              58               58
-    ## 59              59               59
-    ## 60              60               60
-    ## 61              61               61
-    ## 62              62               62
-    ## 63              63               63
-    ## 64              64               64
-    ## 65              65               65
-    ## 66              66               66
-    ## 67              67               67
-    ## 68              68               68
-    ## 69              69               69
-    ## 70              70               70
-    ## 71              71               71
-    ## 72              72               72
-    ## 73              73               73
-    ## 74              74               74
-    ## 75              75               75
-    ## 76              76               76
-    ## 77              77               77
-    ## 78              78               78
-    ## 79              79               79
-    ## 80              80               80
-    ## 81              81               81
-    ## 82              82               82
-    ## 83              83               83
-    ## 84              84               84
-    ## 85              85               85
-    ## 86              86               86
-    ## 87              87               87
-    ## 88              88               88
-    ## 89              89               89
-    ## 90              90               90
-    ## 91              91               91
-    ## 92              92               92
-    ## 93              93               93
-    ## 94              94               94
-    ## 95              95               95
-    ## 96              96               96
-    ## 97              97               97
-    ## 98              98               98
-    ## 99              99               99
-    ## 100            100              100
-    ## 101            101              101
-    ## 102            102              102
-    ## 103            103              103
-    ## 104            104              104
-    ## 105            105              105
-    ## 106            106              106
-    ## 107            107              107
-    ## 108            108              108
-    ## 109            109              109
-    ## 110            110              110
-    ## 111            111              111
-    ## 112            112              112
-    ## 113            113              113
-    ## 114            114              114
-    ## 115            115              115
-    ## 116            116              116
-    ## 117            117              117
-    ## 118            118              118
-    ## 119            119              119
-    ## 120            120              120
-    ## 121            121              121
-    ## 122            122              122
-    ## 123            123              123
-    ## 124            124              124
-    ## 125            125              125
-    ## 126            126              126
-    ## 127            127              127
-    ## 128            128              128
-    ## 129            129              129
-    ## 130            130              130
-    ## 131            131              131
-    ## 132            132              132
-    ## 133            133              133
-    ## 134            134              134
-    ## 135            135              135
-    ## 136            136              136
-    ## 137            137              137
-    ## 138            138              138
+    ##   X1.length.ind. X1.length.ind..1
+    ## 1              1                1
+    ## 2              2                2
+    ## 3              3                3
+    ## 4              4                4
+    ## 5              5                5
+    ## 6              6                6
 
 ``` r
 df[1, 1] = start.ind
 df[1, 2] = end.ind
 
-df
+head(df)
 ```
 
-    ##     X1.length.ind. X1.length.ind..1
-    ## 1               33               49
-    ## 2                2                2
-    ## 3                3                3
-    ## 4                4                4
-    ## 5                5                5
-    ## 6                6                6
-    ## 7                7                7
-    ## 8                8                8
-    ## 9                9                9
-    ## 10              10               10
-    ## 11              11               11
-    ## 12              12               12
-    ## 13              13               13
-    ## 14              14               14
-    ## 15              15               15
-    ## 16              16               16
-    ## 17              17               17
-    ## 18              18               18
-    ## 19              19               19
-    ## 20              20               20
-    ## 21              21               21
-    ## 22              22               22
-    ## 23              23               23
-    ## 24              24               24
-    ## 25              25               25
-    ## 26              26               26
-    ## 27              27               27
-    ## 28              28               28
-    ## 29              29               29
-    ## 30              30               30
-    ## 31              31               31
-    ## 32              32               32
-    ## 33              33               33
-    ## 34              34               34
-    ## 35              35               35
-    ## 36              36               36
-    ## 37              37               37
-    ## 38              38               38
-    ## 39              39               39
-    ## 40              40               40
-    ## 41              41               41
-    ## 42              42               42
-    ## 43              43               43
-    ## 44              44               44
-    ## 45              45               45
-    ## 46              46               46
-    ## 47              47               47
-    ## 48              48               48
-    ## 49              49               49
-    ## 50              50               50
-    ## 51              51               51
-    ## 52              52               52
-    ## 53              53               53
-    ## 54              54               54
-    ## 55              55               55
-    ## 56              56               56
-    ## 57              57               57
-    ## 58              58               58
-    ## 59              59               59
-    ## 60              60               60
-    ## 61              61               61
-    ## 62              62               62
-    ## 63              63               63
-    ## 64              64               64
-    ## 65              65               65
-    ## 66              66               66
-    ## 67              67               67
-    ## 68              68               68
-    ## 69              69               69
-    ## 70              70               70
-    ## 71              71               71
-    ## 72              72               72
-    ## 73              73               73
-    ## 74              74               74
-    ## 75              75               75
-    ## 76              76               76
-    ## 77              77               77
-    ## 78              78               78
-    ## 79              79               79
-    ## 80              80               80
-    ## 81              81               81
-    ## 82              82               82
-    ## 83              83               83
-    ## 84              84               84
-    ## 85              85               85
-    ## 86              86               86
-    ## 87              87               87
-    ## 88              88               88
-    ## 89              89               89
-    ## 90              90               90
-    ## 91              91               91
-    ## 92              92               92
-    ## 93              93               93
-    ## 94              94               94
-    ## 95              95               95
-    ## 96              96               96
-    ## 97              97               97
-    ## 98              98               98
-    ## 99              99               99
-    ## 100            100              100
-    ## 101            101              101
-    ## 102            102              102
-    ## 103            103              103
-    ## 104            104              104
-    ## 105            105              105
-    ## 106            106              106
-    ## 107            107              107
-    ## 108            108              108
-    ## 109            109              109
-    ## 110            110              110
-    ## 111            111              111
-    ## 112            112              112
-    ## 113            113              113
-    ## 114            114              114
-    ## 115            115              115
-    ## 116            116              116
-    ## 117            117              117
-    ## 118            118              118
-    ## 119            119              119
-    ## 120            120              120
-    ## 121            121              121
-    ## 122            122              122
-    ## 123            123              123
-    ## 124            124              124
-    ## 125            125              125
-    ## 126            126              126
-    ## 127            127              127
-    ## 128            128              128
-    ## 129            129              129
-    ## 130            130              130
-    ## 131            131              131
-    ## 132            132              132
-    ## 133            133              133
-    ## 134            134              134
-    ## 135            135              135
-    ## 136            136              136
-    ## 137            137              137
-    ## 138            138              138
+    ##   X1.length.ind. X1.length.ind..1
+    ## 1             33               49
+    ## 2              2                2
+    ## 3              3                3
+    ## 4              4                4
+    ## 5              5                5
+    ## 6              6                6
 
 ``` r
 # for (i in 1) {
