@@ -1,4 +1,4 @@
-Class 4: Bioinformatics Data Analysis with R
+Class 4: R Language Basics
 ================
 
 Background: R is powerful data programming language that you can use to explore and understand data in an open-ended, highly interactive, iterative way. Learning R will give you the freedom to experiment and problem solve during data analysis — exactly what we need as bioinformaticians.
