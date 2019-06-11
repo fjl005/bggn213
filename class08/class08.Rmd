@@ -161,7 +161,6 @@ Let's get some RNASeq data to play with
 ```{r}
 mydata <- read.csv("https://tinyurl.com/expression-CSV",
                   row.names=1)
-mydata
 head(mydata)
 
 # How many genes are in this dataset?
@@ -178,7 +177,7 @@ NOTE: prcomp() expects the samples to be rows and genes to be columns so we need
 t(mydata)
 
 pca <- prcomp(t(mydata), scale = TRUE)
-pca
+head(pca)
 summary(pca)
 ```
 
